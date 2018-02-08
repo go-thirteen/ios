@@ -23,7 +23,6 @@ class NoEscapeNode : SKShapeNode {
     init(rect: CGRect, cutout: CGRect) {
         super.init()
         
-        
         up.path = CGPath(rect: CGRect(x: rect.minX, y: cutout.maxY, width: rect.width, height: rect.height-cutout.maxY), transform: nil)
         up.physicsBody = SKPhysicsBody(polygonFrom: up.path!)
         up.physicsBody!.affectedByGravity = false
@@ -31,7 +30,7 @@ class NoEscapeNode : SKShapeNode {
         up.strokeColor = .clear
         self.addChild(up)
         
-        down.path = CGPath(rect: CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: cutout.minX-rect.minX), transform: nil)
+        down.path = CGPath(rect: CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: cutout.minY-rect.minY), transform: nil)
         down.physicsBody = SKPhysicsBody(polygonFrom: down.path!)
         down.physicsBody!.affectedByGravity = false
         down.physicsBody!.isDynamic = false

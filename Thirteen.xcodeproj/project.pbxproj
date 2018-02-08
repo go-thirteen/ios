@@ -25,6 +25,8 @@
 		ED5DFAF6202CAD9C001D3972 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE4202CAD9C001D3972 /* ScoreView.swift */; };
 		ED5DFAF7202CAD9C001D3972 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE5202CAD9C001D3972 /* ButtonView.swift */; };
 		ED5DFAFB202CAE57001D3972 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED5DFAFA202CAE57001D3972 /* GameKit.framework */; };
+		ED5DFAFD202CB3A9001D3972 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAFC202CB3A9001D3972 /* AboutController.swift */; };
+		ED5DFAFF202CB50B001D3972 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAFE202CB50B001D3972 /* ButtonNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		ED5DFAE4202CAD9C001D3972 /* ScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		ED5DFAE5202CAD9C001D3972 /* ButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		ED5DFAFA202CAE57001D3972 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		ED5DFAFC202CB3A9001D3972 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
+		ED5DFAFE202CB50B001D3972 /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,8 +88,9 @@
 			children = (
 				ED5DFADE202CAD9C001D3972 /* AppDelegate.swift */,
 				ED5DFADD202CAD9C001D3972 /* Assets.xcassets */,
-				ED5DFAD6202CAD9C001D3972 /* GameScene.swift */,
 				ED5DFAD7202CAD9C001D3972 /* GameViewController.swift */,
+				ED5DFAD6202CAD9C001D3972 /* GameScene.swift */,
+				ED5DFAFC202CB3A9001D3972 /* AboutController.swift */,
 				ED5DFADF202CAD9C001D3972 /* UIComponents */,
 				ED5DFAD8202CAD9C001D3972 /* Storyboards */,
 				ED5DFACF202CAD9C001D3972 /* Info.plist */,
@@ -124,6 +129,7 @@
 				ED5DFAE3202CAD9C001D3972 /* NoEscapeNode.swift */,
 				ED5DFAE4202CAD9C001D3972 /* ScoreView.swift */,
 				ED5DFAE5202CAD9C001D3972 /* ButtonView.swift */,
+				ED5DFAFE202CB50B001D3972 /* ButtonNode.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -238,6 +244,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED5DFAF1202CAD9C001D3972 /* AppDelegate.swift in Sources */,
+				ED5DFAFD202CB3A9001D3972 /* AboutController.swift in Sources */,
+				ED5DFAFF202CB50B001D3972 /* ButtonNode.swift in Sources */,
 				ED5DFAF6202CAD9C001D3972 /* ScoreView.swift in Sources */,
 				ED5DFAED202CAD9C001D3972 /* GameViewController.swift in Sources */,
 				ED5DFAF2202CAD9C001D3972 /* BallNode.swift in Sources */,

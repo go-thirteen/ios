@@ -73,7 +73,10 @@ class BallNode : SKShapeNode {
     private var selectedColor: SKColor
     private var selectedTextColor: SKColor
     
-    init(size: CGFloat, position: CGPoint, color : SKColor) {
+    init(size: CGFloat, position: CGPoint) {
+        
+        let rand = arc4random_uniform(UInt32(shadesOfRed.count))
+        let color = shadesOfRed[Int(rand)]
         
         self.defaultColor = color
         self.selectedColor = color.withAlphaComponent(0.5)
@@ -137,5 +140,20 @@ class BallNode : SKShapeNode {
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return SKColor(red: 1-red, green: 1-green, blue: 1-blue, alpha: 1)
     }
+    
+    
+    let shadesOfRed = [
+        UIColor(red: 153/255, green: 0, blue: 0, alpha: 1),
+        UIColor(red: 178/255, green: 0, blue: 0, alpha: 1),
+        UIColor(red: 204/255, green: 0, blue: 0, alpha: 1),
+        UIColor(red: 230/255, green: 0, blue: 0, alpha: 1),
+        UIColor(red: 255/255, green: 0, blue: 0, alpha: 1),
+        UIColor(red: 255/255, green: 51/255, blue: 51/255, alpha: 1),
+        UIColor(red: 255/255, green: 76/255, blue: 76/255, alpha: 1),
+        UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1),
+        UIColor(red: 255/255, green: 127/255, blue: 127/255, alpha: 1),
+        UIColor(red: 255/255, green: 153/255, blue: 153/255, alpha: 1)
+    ]
+    
     
 }

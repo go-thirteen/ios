@@ -18,22 +18,42 @@ class GameScene: SKScene {
     private var noEscapeShape : NoEscapeNode
     private var motionManager = CMMotionManager()
     
+    private var infoButton: ButtonNode
+    private var muteButton: ButtonNode
+    private var gcButton: ButtonNode
+
+    var mute = false {
+        didSet {
+            if mute != oldValue {
+                UserDefaults.standard.set(mute, forKey: "mute")
+                
+                if mute {
+                    let tex = SKTexture(image: #imageLiteral(resourceName: "ic_volume_off_white"))
+                    muteButton.texture = tex
+                } else {
+                    let tex = SKTexture(image: #imageLiteral(resourceName: "ic_volume_up_white"))
+                    muteButton.texture = tex
+                }
+            }
+        }
+    }
+    
     required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
     
     init(rect: CGRect) {
-        let color = SKColor(displayP3Red: 253/255, green: 245/255, blue: 230/255, alpha: 1)
-        let padding : CGFloat = 20
-        let cornerRad :CGFloat = 20
+        let color = SKColor(red: 253/255, green: 245/255, blue: 230/255, alpha: 1)
+        let padding: CGFloat = 20
+        let topMargin: CGFloat = 14
+        let cornerRad: CGFloat = 20
         
-        let statusH : CGFloat = 150
-        
+        let statusH: CGFloat = 150
         
         let buttonW = statusH
         let buttonH = statusH
         let buttonX = padding
-        let buttonY = rect.height - padding - buttonH
+        let buttonY = rect.height - padding - buttonH - topMargin
         let buttonRect = CGRect(x: buttonX, y: buttonY, width: buttonW, height: buttonH)
         self.buttonNode = ButtonView(rect: buttonRect, cornerRadius: cornerRad, color: color, text: "Start")
         
@@ -44,20 +64,40 @@ class GameScene: SKScene {
         let scoreRect = CGRect(x: scoreX, y: scoreY, width: scoreW, height: scoreH)
         self.scoreNode = ScoreView(rect: scoreRect, cornerRadius: cornerRad, color: color)
         
-        
         let backW = rect.width - padding * 2
-        let backH = rect.height - statusH - padding * 3
+        let backH = rect.height - statusH - topMargin - padding * 5
         let backX = padding
-        let backY = padding
+        let backY = padding * 3
         let backRect = CGRect(x: backX, y: backY, width: backW, height: backH)
         self.gameNode = GameView(rect: backRect, cornerRadius: cornerRad, color: color)
         
         let escapeW = rect.width*2
         let escapeH = rect.height*2
-        let escapeX = rect.midX - rect.width*0.5
-        let escapeY = rect.midY - rect.height*0.5
+        let escapeX = rect.midX - escapeW*0.5
+        let escapeY = rect.midY - escapeH*0.5
         let escapeRect = CGRect(x: escapeX, y: escapeY, width: escapeW, height: escapeH)
         self.noEscapeShape = NoEscapeNode(rect: escapeRect, cutout: backRect)
+        
+        let iconSize = CGSize(width: 35, height: 35)
+        let iconPadding = (padding*3 - iconSize.height) / 2
+        
+        let infoX = iconPadding + iconSize.width*0.5
+        let infoY = iconPadding + iconSize.height*0.5
+        let infoTex = SKTexture(image: #imageLiteral(resourceName: "ic_info_outline_white"))
+        infoButton = ButtonNode(texture: infoTex, color: color, size: iconSize)
+        infoButton.position = CGPoint(x: infoX, y: infoY)
+        
+        let muteX = infoButton.position.x + iconSize.width + iconPadding
+        let muteY = iconPadding + iconSize.height*0.5
+        let muteTex = SKTexture(image: #imageLiteral(resourceName: "ic_volume_up_white"))
+        muteButton = ButtonNode(texture: muteTex, color: color, size: iconSize)
+        muteButton.position = CGPoint(x: muteX, y: muteY)
+        
+        let gcX = rect.width - iconSize.width*0.5 - iconPadding
+        let gcY = iconPadding + iconSize.height*0.5
+        let gcTex = SKTexture(image: #imageLiteral(resourceName: "ic_trending_up_white"))
+        gcButton = ButtonNode(texture: gcTex, color: color, size: iconSize)
+        gcButton.position = CGPoint(x: gcX, y: gcY)
         
         super.init(size: rect.size)
         
@@ -73,12 +113,39 @@ class GameScene: SKScene {
             })
         
         
-        
         self.buttonNode.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(self.startButton))
+        infoButton.addTarget {
+            if let vc = self.view?.window?.rootViewController as? GameViewController {
+                vc.openAbout()
+            }
+        }
+        muteButton.addTarget {
+            self.mute = !self.mute
+        }
+        gcButton.addTarget {
+            if let vc = self.view?.window?.rootViewController as? GameViewController {
+                vc.openGC()
+            }
+        }
+        
+        infoButton.run(SKAction.colorize(with: color, colorBlendFactor: 1, duration: 0))
+        muteButton.run(SKAction.colorize(with: color, colorBlendFactor: 1, duration: 0))
+        gcButton.run(SKAction.colorize(with: color, colorBlendFactor: 1, duration: 0))
+        
         self.addChild(noEscapeShape)
         self.addChild(buttonNode)
         self.addChild(scoreNode)
         self.addChild(gameNode)
+        self.addChild(infoButton)
+        self.addChild(muteButton)
+        self.addChild(gcButton)
+        
+        startButton()
+        getMute()
+    }
+    
+    func getMute() {
+        mute = UserDefaults.standard.bool(forKey: "mute")
     }
     
     override func didMove(to view: SKView) {

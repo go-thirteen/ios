@@ -14,8 +14,9 @@ class GameView : SKShapeNode {
     private var gameOverNode : GameOverNode
     private var score = 0 {
         didSet {
-            let p = parent as! GameScene
-            p.updateScore(score)
+            if let p = parent as? GameScene {
+                p.updateScore(score)
+            }
         }
     }
     
@@ -43,15 +44,13 @@ class GameView : SKShapeNode {
         physicsBody = physics
         fillColor = color
         isUserInteractionEnabled = true
-        
-        //addNode(5)
     }
     
     func addNode(_ times : Int) {
         for _ in 0...times-1 {
         let size = (self.frame.width + self.frame.height) * getFactor(1)
         let pos = CGPoint(x: self.frame.width*0.5, y: self.frame.height*0.5)
-        self.nodes.append(BallNode(size: size, position: pos, color: SKColor.red))
+        self.nodes.append(BallNode(size: size, position: pos))
         
         let op = Int(arc4random_uniform(99))
         
@@ -205,7 +204,7 @@ class GameView : SKShapeNode {
                         }
                     }
                     
-                    let newNode = BallNode(size: newSize, position: locationInParent, color: SKColor.red)
+                    let newNode = BallNode(size: newSize, position: locationInParent)
                     newNode.oper = newOper
                     newNode.value = newValue
                     newNode.timesAdded = newAdded
@@ -251,7 +250,12 @@ class GameView : SKShapeNode {
         let num = Int(arc4random_uniform(5))
         let playSound = SKAction.playSoundFileNamed("Pop\(num).wav", waitForCompletion: false)
         
-        node.run(SKAction.sequence([SKAction.wait(forDuration: 0.3), playSound, SKAction.removeFromParent()]))
+        if let p = scene as? GameScene,!p.mute {
+            node.run(SKAction.sequence([SKAction.wait(forDuration: 0.3), playSound, SKAction.removeFromParent()]))
+        } else {
+            node.run(SKAction.sequence([SKAction.wait(forDuration: 0.3), SKAction.removeFromParent()]))
+        }
+        
         
         let ID = nodes.index(of: node)
         if let at = ID {
@@ -274,7 +278,7 @@ class GameView : SKShapeNode {
         
         let addCircle = CGFloat.pi * pow(width*0.5, 2)
         
-        if circleArea + addCircle*1 < rectArea {
+        if circleArea + addCircle < rectArea {
             return true
         }
         return false
@@ -288,8 +292,12 @@ class GameView : SKShapeNode {
     }
     
     func gameOver() {
-        self.addChild(gameOverNode)
-        running = false
+        if let vc = self.scene?.view?.window?.rootViewController as? GameViewController {
+            self.addChild(gameOverNode)
+            running = false
+            vc.updateGC(score)
+        }
+
     }
     
     func restart() {
@@ -300,4 +308,24 @@ class GameView : SKShapeNode {
         running = true
     }
     
+    var timer: Timer?
+    
+    func startBlinking() {
+        let color1 = SKColor(red: 253/255, green: 245/255, blue: 230/255, alpha: 1)
+        let color2 = SKColor(red: 203/255, green: 195/255, blue: 180/255, alpha: 1)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+            self.run(SKAction.sequence([SKAction.customAction(withDuration: 0.2, actionBlock: { (node, _) in
+                let nod = node as? SKShapeNode
+                nod?.fillColor = color2
+            }),SKAction.customAction(withDuration: 0.2, actionBlock: { (node, _) in
+                let nod = node as? SKShapeNode
+                nod?.fillColor = color1
+            })]))
+        })
+    }
+    
+    func stopBlinking() {
+        timer?.invalidate()
+    }
 }
