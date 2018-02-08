@@ -1,9 +1,9 @@
 //
 //  GameViewController.swift
-//  Thirteen
+//  13!
 //
-//  Created by Wilhelm Thieme on 2/8/18.
-//  Copyright © 2018 Wilhelm Thieme. All rights reserved.
+//  Created by Wilhelm Thieme on 10/15/17.
+//  Copyright © 2017 Wilhelm Thieme. All rights reserved.
 //
 
 import UIKit
@@ -16,14 +16,9 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
+            let scene = GameScene(rect: self.view.frame)
+            scene.scaleMode = .aspectFit
+            view.presentScene(scene)
             
             view.ignoresSiblingOrder = true
             
@@ -33,15 +28,12 @@ class GameViewController: UIViewController {
     }
 
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
+    
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+        return .portrait
     }
 
     override func didReceiveMemoryWarning() {

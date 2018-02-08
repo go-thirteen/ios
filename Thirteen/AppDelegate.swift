@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Thirteen
+//  13!
 //
-//  Created by Wilhelm Thieme on 2/8/18.
-//  Copyright © 2018 Wilhelm Thieme. All rights reserved.
+//  Created by Wilhelm Thieme on 10/15/17.
+//  Copyright © 2017 Wilhelm Thieme. All rights reserved.
 //
 
 import UIKit
