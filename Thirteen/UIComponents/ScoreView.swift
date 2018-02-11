@@ -17,7 +17,7 @@ class ScoreView : SKShapeNode {
             
             if score > highScore {
                 highScore = score
-                UserDefaults.standard.set(highScore, forKey: "highScore")
+                UserDefaults.standard.set(highScore, forKey: Keys.highScore)
             }
         }
     }
@@ -44,7 +44,7 @@ class ScoreView : SKShapeNode {
         scoreLabel = SKLabelNode(fontNamed: "Helvetica")
         highScoreLabel = SKLabelNode(fontNamed: "Helvetica")
         
-        highScore = UserDefaults.standard.integer(forKey: "highScore")
+        highScore = UserDefaults.standard.integer(forKey: Keys.highScore)
         
         super.init()
         

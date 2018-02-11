@@ -12,31 +12,14 @@ import CoreMotion
 
 class GameScene: SKScene {
     
-    private var gameNode : GameView
+    var gameNode : GameView
     private var buttonNode : ButtonView
     private var scoreNode : ScoreView
     private var noEscapeShape : NoEscapeNode
     private var motionManager = CMMotionManager()
     
     private var infoButton: ButtonNode
-    private var muteButton: ButtonNode
     private var gcButton: ButtonNode
-
-    var mute = false {
-        didSet {
-            if mute != oldValue {
-                UserDefaults.standard.set(mute, forKey: "mute")
-                
-                if mute {
-                    let tex = SKTexture(image: #imageLiteral(resourceName: "ic_volume_off_white"))
-                    muteButton.texture = tex
-                } else {
-                    let tex = SKTexture(image: #imageLiteral(resourceName: "ic_volume_up_white"))
-                    muteButton.texture = tex
-                }
-            }
-        }
-    }
     
     required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
@@ -45,7 +28,7 @@ class GameScene: SKScene {
     init(rect: CGRect) {
         let color = SKColor(red: 253/255, green: 245/255, blue: 230/255, alpha: 1)
         let padding: CGFloat = 20
-        let topMargin: CGFloat = 14
+        let topMargin: CGFloat = UIApplication.shared.statusBarFrame.height
         let cornerRad: CGFloat = 20
         
         let statusH: CGFloat = 150
@@ -83,15 +66,9 @@ class GameScene: SKScene {
         
         let infoX = iconPadding + iconSize.width*0.5
         let infoY = iconPadding + iconSize.height*0.5
-        let infoTex = SKTexture(image: #imageLiteral(resourceName: "ic_info_outline_white"))
+        let infoTex = SKTexture(image: #imageLiteral(resourceName: "ic_settings_white"))
         infoButton = ButtonNode(texture: infoTex, color: color, size: iconSize)
         infoButton.position = CGPoint(x: infoX, y: infoY)
-        
-        let muteX = infoButton.position.x + iconSize.width + iconPadding
-        let muteY = iconPadding + iconSize.height*0.5
-        let muteTex = SKTexture(image: #imageLiteral(resourceName: "ic_volume_up_white"))
-        muteButton = ButtonNode(texture: muteTex, color: color, size: iconSize)
-        muteButton.position = CGPoint(x: muteX, y: muteY)
         
         let gcX = rect.width - iconSize.width*0.5 - iconPadding
         let gcY = iconPadding + iconSize.height*0.5
@@ -116,11 +93,8 @@ class GameScene: SKScene {
         self.buttonNode.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(self.startButton))
         infoButton.addTarget {
             if let vc = self.view?.window?.rootViewController as? GameViewController {
-                vc.openAbout()
+                vc.openSettings()
             }
-        }
-        muteButton.addTarget {
-            self.mute = !self.mute
         }
         gcButton.addTarget {
             if let vc = self.view?.window?.rootViewController as? GameViewController {
@@ -129,7 +103,6 @@ class GameScene: SKScene {
         }
         
         infoButton.run(SKAction.colorize(with: color, colorBlendFactor: 1, duration: 0))
-        muteButton.run(SKAction.colorize(with: color, colorBlendFactor: 1, duration: 0))
         gcButton.run(SKAction.colorize(with: color, colorBlendFactor: 1, duration: 0))
         
         self.addChild(noEscapeShape)
@@ -137,24 +110,22 @@ class GameScene: SKScene {
         self.addChild(scoreNode)
         self.addChild(gameNode)
         self.addChild(infoButton)
-        self.addChild(muteButton)
         self.addChild(gcButton)
         
         startButton()
-        getMute()
     }
-    
-    func getMute() {
-        mute = UserDefaults.standard.bool(forKey: "mute")
-    }
-    
-    override func didMove(to view: SKView) {
-        
-    }
-    
+
+    var first = true
     @objc func startButton() {
         gameNode.restart()
         buttonNode.title = "Restart"
+        
+        if !first {
+            if let vc = self.view?.window?.rootViewController as? GameViewController {
+                vc.openAd()
+            }
+        }
+        first = false
     }
     
     func updateScore(_ score : Int) {

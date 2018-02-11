@@ -8,9 +8,9 @@
 
 import SpriteKit
 
-class GameView : SKShapeNode {
+class GameView: SKShapeNode {
     
-    private var nodes : [BallNode] = []
+    var nodes: [BallNode] = []
     private var gameOverNode : GameOverNode
     private var score = 0 {
         didSet {
@@ -46,45 +46,57 @@ class GameView : SKShapeNode {
         isUserInteractionEnabled = true
     }
     
+    func nodeWidth(factor: CGFloat) -> CGFloat {
+        return (self.frame.width + self.frame.height) * getFactor(factor)
+    }
+    
     func addNode(_ times : Int) {
         for _ in 0...times-1 {
-        let size = (self.frame.width + self.frame.height) * getFactor(1)
-        let pos = CGPoint(x: self.frame.width*0.5, y: self.frame.height*0.5)
-        self.nodes.append(BallNode(size: size, position: pos))
+            let size = nodeWidth(factor: 1)
+            let node = BallNode(size: size)
+            
+            let op = Int(arc4random_uniform(101))
         
-        let op = Int(arc4random_uniform(99))
-        
-        
-        if op < 10 {
-            nodes.last!.oper = .multiply
-            let value = Int(arc4random_uniform(2))
-            if value == 0 {
-                nodes.last!.value = -1
-            } else if value == 1 {
-                nodes.last!.value = 2
-            } else {
-                nodes.last!.value = 3
+            if op < 10 {
+                node.oper = .multiply
+                let value = Int(arc4random_uniform(2))
+                if value == 0 {
+                    node.value = -1
+                } else if value == 1 {
+                    node.value = 2
+                }
+            } else if op >= 10 {
+                node.oper = .plus
+            
+                let value = generateNumber()
+            
+                node.value = value
             }
-        } else if op >= 10 {
-            nodes.last!.oper = .plus
             
-            let value = generateNumber()
-            
-            nodes.last!.value = value
-        }
+            if largestCircleDiameterThatFits() / 2 < node.frame.height {
+                gameOver()
+                return
+            }
         
-        self.addChild(self.nodes.last!)
+            self.addChild(node)
+            score += abs(node.value)
+            self.nodes.append(node)
+            node.position = CGPoint(x: frame.width*0.5, y: frame.height*0.5)
             
-            score += abs(self.nodes.last!.value)
+            if largestCircleDiameterThatFits() / 3 < nodeWidth(factor: 1) {
+                startBlinking()
+            } else {
+                stopBlinking()
+            }
         }
     }
     
     func generateNumber() -> Int {
         var random = 0
         for _ in 0...9 {
-            random += Int(arc4random_uniform(11)) - 5
+            random += Int(arc4random_uniform(3)) - 1
         }
-        random += 6
+        
         if random == 0 || random == 13 {
             random = generateNumber()
         }
@@ -96,6 +108,14 @@ class GameView : SKShapeNode {
             node.removeFromParent()
         }
         nodes = []
+    }
+    
+    func contains(_ rect: CGRect) -> Bool {
+        let points = getPoints(from: rect)
+        if self.contains(points.0) && self.contains(points.1) && self.contains(points.2) && self.contains(points.3) {
+            return true
+        }
+        return false
     }
     
     func getPoints(from: CGRect) -> (CGPoint, CGPoint, CGPoint, CGPoint) {
@@ -112,18 +132,26 @@ class GameView : SKShapeNode {
         return (one, two, three, four)
     }
     
-    var movableNode : BallNode?
+    var movableNode: BallNode?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
+            
             for node in nodes {
                 if node.contains(location) {
                     movableNode = node
-                    if let movable = movableNode {
-                        movable.physicsBody = nil
-                    }
+                    node.isPickedUp = true
+                    return
                 }
+            }
+        }
+    }
+    
+    var hapticNode: BallNode? {
+        didSet {
+            if hapticNode != oldValue, hapticNode != nil {
+                createHaptic(type: .snap)
             }
         }
     }
@@ -131,43 +159,43 @@ class GameView : SKShapeNode {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
-            let locationInParent = CGPoint(x: location.x-self.frame.minX, y: location.y-self.frame.minY)
         
             if let movable = movableNode {
                 movable.zRotation = 0
-                let moveLocation = CGPoint(x: locationInParent.x-self.frame.width*0.5-movable.frame.width*0.5, y: locationInParent.y-self.frame.height*0.5-movable.frame.height*0.5)
-                let rectInParent = CGRect(x: locationInParent.x-movable.frame.width*0.5, y: locationInParent.y-movable.frame.height*0.5, width: movable.frame.width, height: movable.frame.height)
-                let points = getPoints(from: rectInParent)
-                if self.contains(points.0) && self.contains(points.1) && self.contains(points.2) && self.contains(points.3) {
-                    movable.position = moveLocation
+                
+                let rect = CGRect(x: location.x-movable.frame.width*0.5, y: location.y-movable.frame.height*0.5, width: movable.frame.width, height: movable.frame.height)
+                if contains(rect) {
+                    movable.position = location
                 }
                 
                 for node in nodes {
                     node.isSelected = node.contains(location)
+                    
+                    if node.contains(location) && node != movable {
+                        hapticNode = node
+                        movable.position = node.position
+                        return
+                    }
                 }
- 
+                hapticNode = nil
             }
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override  func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
-            let locationInParent = CGPoint(x: location.x-self.frame.minX, y: location.y-self.frame.minY)
             if let movable = movableNode {
-            
-                var toRemove = false
-                var removeNode : BallNode?
-                var newValue = 0
-                var newOper = BallNode.operators.plus
-                var newSize : CGFloat = 0
-                var newAdded : CGFloat = 0
                 for node in nodes {
                     if node.contains(location) && !node.isEqual(to: movable) {
+                        
                         let value1 = movable.value
                         let op1 = movable.oper
                         let value2 = node.value
                         let op2 = node.oper
+                        
+                        var newValue = 0
+                        var newOper = BallNode.operators.plus
                         
                         if op1 == .multiply || op2 == .multiply {
                             newValue = value1 * value2
@@ -179,60 +207,43 @@ class GameView : SKShapeNode {
                             newOper = .multiply
                         }
                         
-                        newAdded = node.timesAdded + movable.timesAdded
-                        let factor = getFactor(newAdded)
-                        newSize = (self.frame.width + self.frame.height) * factor
+                        let newAdded = node.timesAdded + movable.timesAdded
+                        let newSize = nodeWidth(factor: newAdded)
                         
-                        toRemove = true
-                        removeNode = node
-                    }
-                }
-                
-                if toRemove {
-                    movable.removeFromParent()
-                    let ID = nodes.index(of: movable)
-                    if let at = ID {
-                        nodes.remove(at: at)
-                    }
-                    movableNode = nil
-                    
-                    if let node = removeNode {
-                        node.removeFromParent()
-                        let ID2 = nodes.index(of: node)
-                        if let at = ID2 {
+                        movable.removeFromParent()
+                        if let at = nodes.index(of: movable) {
                             nodes.remove(at: at)
                         }
+                        
+                        node.oper = newOper
+                        node.value = newValue
+                        node.timesAdded = newAdded
+                        node.grow(to: newSize)
+                        
+    
+                        
+                        if node.value == 13 && node.oper == .plus {
+                            pop(node)
+                            addNode(2)
+                        } else {
+                            addNode(1)
+                        }
+                        
+                        movableNode = nil
+                        node.isSelected = false
+                        return
+                        
                     }
-                    
-                    let newNode = BallNode(size: newSize, position: locationInParent)
-                    newNode.oper = newOper
-                    newNode.value = newValue
-                    newNode.timesAdded = newAdded
-                    nodes.append(newNode)
-                    self.addChild(newNode)
-                    
-                    if newNode.value == 13 && newNode.oper == .plus {
-                        pop(newNode)
-                        addNode(2)
-                    } else {
-                        addNode(1)
-                    }
-                    
-                    if !doesFit((self.frame.width + self.frame.height) * getFactor(1)) {
-                        gameOver()
-                    }
-                    
-                } else {
-                    movable.isSelected = false
-                    movable.setPhysics()
-                    movableNode = nil
                 }
+                movable.isPickedUp = false
+                movableNode = nil
             }
         }
     }
+    
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let movable = movableNode {
-            movable.setPhysics()
+            movable.isPickedUp = false
             movableNode = nil
         }
     }
@@ -248,40 +259,21 @@ class GameView : SKShapeNode {
     
     func pop(_ node: BallNode) {
         let num = Int(arc4random_uniform(5))
-        let playSound = SKAction.playSoundFileNamed("Pop\(num).wav", waitForCompletion: false)
+        var playSound = SKAction.playSoundFileNamed("Pop\(num).wav", waitForCompletion: false)
         
-        if let p = scene as? GameScene,!p.mute {
-            node.run(SKAction.sequence([SKAction.wait(forDuration: 0.3), playSound, SKAction.removeFromParent()]))
-        } else {
-            node.run(SKAction.sequence([SKAction.wait(forDuration: 0.3), SKAction.removeFromParent()]))
+        if UserDefaults.standard.bool(forKey: Keys.muted) {
+            playSound = SKAction.wait(forDuration: 0)
         }
         
+        node.run(SKAction.sequence([SKAction.wait(forDuration: 0.3), playSound]), completion:  {
+            node.removeFromParent()
+            self.score += 13
+        })
         
         let ID = nodes.index(of: node)
         if let at = ID {
             nodes.remove(at: at)
         }
-        score += 13
-        
-    }
-    
-    func doesFit(_ width : CGFloat) -> Bool {
-
-        let rectArea = frame.width * frame.height
-        var circleArea : CGFloat = 0
-        for node in nodes {
-            circleArea += CGFloat.pi * pow(node.frame.width*0.5, 2)
-            if node.frame.width > self.frame.width || node.frame.width > self.frame.height {
-                return false
-            }
-        }
-        
-        let addCircle = CGFloat.pi * pow(width*0.5, 2)
-        
-        if circleArea + addCircle < rectArea {
-            return true
-        }
-        return false
     }
     
     func getFactor(_ size : CGFloat) -> CGFloat {
@@ -296,21 +288,34 @@ class GameView : SKShapeNode {
             self.addChild(gameOverNode)
             running = false
             vc.updateGC(score)
+            stopBlinking()
+            createHaptic(type: .gameOver)
         }
 
     }
     
     func restart() {
+        if running, let vc = self.scene?.view?.window?.rootViewController as? GameViewController {
+            vc.updateGC(score)
+        }
+        
         clearBoard()
         score = 0
         addNode(10)
         gameOverNode.removeFromParent()
         running = true
+        
+        if let pos = nodes.last?.position {
+            nodes.last?.position = CGPoint(x: pos.x+1, y: pos.y+1)
+        }
     }
     
     var timer: Timer?
     
     func startBlinking() {
+        guard timer == nil else {
+            return
+        }
         let color1 = SKColor(red: 253/255, green: 245/255, blue: 230/255, alpha: 1)
         let color2 = SKColor(red: 203/255, green: 195/255, blue: 180/255, alpha: 1)
         
@@ -326,6 +331,51 @@ class GameView : SKShapeNode {
     }
     
     func stopBlinking() {
+        guard timer != nil else {
+            return
+        }
         timer?.invalidate()
+        timer = nil
     }
+    
+    func largestCircleDiameterThatFits() -> CGFloat {
+        
+        var ballArea: CGFloat = 0
+        
+        for ball in self.nodes {
+            let area = pow(ball.size,2)
+            ballArea += area
+        }
+        
+        let boardArea = frame.width*frame.height
+        let leftOver = (boardArea-ballArea).squareRoot()
+        
+        return leftOver
+    }
+    
+    let impact = UIImpactFeedbackGenerator()
+    let notification = UINotificationFeedbackGenerator()
+    
+    enum hapticType {
+        case gameOver, blinking, snap, thirteen
+    }
+    
+    func createHaptic(type: hapticType) {
+        guard !UserDefaults.standard.bool(forKey: Keys.hapticDisabled) else {
+            return
+        }
+        
+        switch type {
+        case .gameOver:
+            notification.notificationOccurred(.error)
+        case .blinking:
+            notification.notificationOccurred(.warning)
+        case .thirteen:
+            notification.notificationOccurred(.success)
+        case .snap:
+            impact.impactOccurred()
+        }
+        
+    }
+    
 }

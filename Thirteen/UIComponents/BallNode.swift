@@ -73,10 +73,36 @@ class BallNode : SKShapeNode {
     private var selectedColor: SKColor
     private var selectedTextColor: SKColor
     
-    init(size: CGFloat, position: CGPoint) {
+    let contactNothing: UInt32 = 0x0
+    let contactBall: UInt32 = 0x1 << 0
+    
+    var isPickedUp: Bool = false {
+        didSet {
+            isSelected = isPickedUp
+            
+            if isPickedUp != oldValue {
+                if isPickedUp {
+                    self.physicsBody?.categoryBitMask = contactNothing
+                    self.physicsBody?.collisionBitMask = contactNothing
+                    self.physicsBody?.affectedByGravity = false
+                } else {
+                   self.physicsBody?.categoryBitMask = contactBall
+                    self.physicsBody?.collisionBitMask = contactBall
+                    self.physicsBody?.affectedByGravity = true
+                }
+            }
+            
+        }
+    }
+    
+    var size: CGFloat
+    
+    init(size: CGFloat) {
         
-        let rand = arc4random_uniform(UInt32(shadesOfRed.count))
-        let color = shadesOfRed[Int(rand)]
+        self.size = size
+        
+        let rand = arc4random_uniform(UInt32(Colors.shadesOfRed.count))
+        let color = Colors.shadesOfRed[Int(rand)]
         
         self.defaultColor = color
         self.selectedColor = color.withAlphaComponent(0.5)
@@ -85,51 +111,36 @@ class BallNode : SKShapeNode {
         
         super.init()
         
+        buildFrame(size)
+        
         fillColor = self.defaultColor
-        
-        let rect = CGRect(x: position.x, y: position.y, width: size, height: size)
-        path = CGPath(roundedRect: rect, cornerWidth: size*0.5, cornerHeight: size*0.5, transform: nil)
-        setPhysics()
-        
         
         label.verticalAlignmentMode = .center
         label.horizontalAlignmentMode = .center
-        label.position = CGPoint(x: rect.midX, y: rect.midY)
+        label.position = self.position
         label.fontColor = SKColor.black
         label.text = title
-        //textSize dependant on buttonsize
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            label.fontSize *= 2
+        }
         addChild(label)
+        
     }
     
-    func setPhysics() {
-        let physics = SKPhysicsBody(polygonFrom: self.path!)
+    private func setPhysics(diameter: CGFloat) {
+        let radius = diameter/2
+        let physics = SKPhysicsBody(circleOfRadius: radius)
+        physics.categoryBitMask = contactBall
         physics.affectedByGravity = true
         physics.restitution = 0
         physics.linearDamping = 0.2
+        physics.contactTestBitMask = contactBall
         physicsBody = physics
     }
     
-    func resize(to: CGFloat, duration: TimeInterval) {
-        let size = CGSize(width: to, height: to)
-        let rect = CGRect(origin: self.position, size: size)
-        path = CGPath(roundedRect: rect, cornerWidth: self.frame.width*0.5, cornerHeight: self.frame.height*0.5, transform: nil)
-        setPhysics()
-    }
-    
-    func resize(by: CGFloat, duration: TimeInterval) {
-        let size = CGSize(width: self.frame.width*by, height: self.frame.height*by)
-        let rect = CGRect(origin: self.position, size: size)
-        path = CGPath(roundedRect: rect, cornerWidth: self.frame.width*0.5, cornerHeight: self.frame.height*0.5, transform: nil)
-        setPhysics()
-    }
-    
-    func moveTo(_ to: CGPoint, duration: TimeInterval?) {
-        if duration == nil {
-            let rect = CGRect(x: to.x, y: to.y, width: self.frame.width, height: self.frame.height)
-            path = CGPath(roundedRect: rect, cornerWidth: self.frame.width*0.5, cornerHeight: self.frame.height*0.5, transform: nil)
-        } else {
-            self.run(SKAction.move(to: to, duration: duration!))
-        }
+    func grow(to: CGFloat) {
+        buildFrame(to)
+        self.size = to
     }
     
     private func inverse(color : SKColor) -> SKColor {
@@ -141,19 +152,12 @@ class BallNode : SKShapeNode {
         return SKColor(red: 1-red, green: 1-green, blue: 1-blue, alpha: 1)
     }
     
-    
-    let shadesOfRed = [
-        UIColor(red: 153/255, green: 0, blue: 0, alpha: 1),
-        UIColor(red: 178/255, green: 0, blue: 0, alpha: 1),
-        UIColor(red: 204/255, green: 0, blue: 0, alpha: 1),
-        UIColor(red: 230/255, green: 0, blue: 0, alpha: 1),
-        UIColor(red: 255/255, green: 0, blue: 0, alpha: 1),
-        UIColor(red: 255/255, green: 51/255, blue: 51/255, alpha: 1),
-        UIColor(red: 255/255, green: 76/255, blue: 76/255, alpha: 1),
-        UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1),
-        UIColor(red: 255/255, green: 127/255, blue: 127/255, alpha: 1),
-        UIColor(red: 255/255, green: 153/255, blue: 153/255, alpha: 1)
-    ]
-    
+    func buildFrame(_ size: CGFloat) {
+        setPhysics(diameter: size)
+        
+        let origin = CGPoint(x: -size*0.5, y: -size*0.5)
+        let rect = CGRect(origin: origin, size: CGSize(width: size, height: size))
+        self.path = CGPath(ellipseIn: rect, transform: nil)
+    }
     
 }

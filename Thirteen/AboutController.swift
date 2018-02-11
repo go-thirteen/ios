@@ -21,10 +21,10 @@ class AboutController : UIViewController {
     private let close = UIButton()
     
     let copyrightString = "Copyright © 2017 Wilhelm Johan Thieme Jr. All rights reserved."
-    let acknowledgementsString = "Made using Google Material Design under the Apache License Version 2.0"
-    let versionString = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-    let buildString =  Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-    let appTitleString = Bundle.main.infoDictionary!["CFBundleDisplayName"] as! String
+    let acknowledgementsString = "By using this application you agree to the Terms & Conditions and the Privacy Policy"
+    let versionString = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? ""
+    let buildString =  Bundle.main.infoDictionary!["CFBundleVersion"] as? String ?? ""
+    let appTitleString = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String ?? ""
     
     override func viewDidLoad() {
         super.viewDidLoad()

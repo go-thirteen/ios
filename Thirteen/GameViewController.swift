@@ -10,37 +10,79 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import GameKit
+import GoogleMobileAds
 
-class GameViewController: UIViewController, GKGameCenterControllerDelegate {
+class GameViewController: UIViewController, GKGameCenterControllerDelegate, GADInterstitialDelegate {
     
     var gcEnabled = Bool()
     var gcDefaultLeaderBoard = String()
     
     let LEADERBOARD_ID = "com.wjthieme.Thirteen"
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    var gameScene: GameScene?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        #if DEBUG
+            UserDefaults.standard.set(false, forKey: Keys.openedBefore)
+        #endif
+        
         authenticateLocalPlayer()
+    
         
         if let view = self.view as! SKView? {
-            let scene = GameScene(rect: self.view.frame)
-            scene.scaleMode = .aspectFit
-            view.presentScene(scene)
-            
+            gameScene = GameScene(rect: self.view.frame)
+            gameScene?.scaleMode = .aspectFit
+            view.presentScene(gameScene!)
             view.ignoresSiblingOrder = true
+        }
+        
+        configureAd()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !UserDefaults.standard.bool(forKey: Keys.openedBefore) {
+            openTutorial()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let scene = gameScene {
+            scene.isPaused = false
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if let scene = gameScene {
+            scene.isPaused = true
         }
     }
     
     func updateGC(_ score: Int) {
-        let scoreObj = GKScore(leaderboardIdentifier: LEADERBOARD_ID)
-        scoreObj.value = Int64(score)
-        GKScore.report([scoreObj]) { (error) in
-            if error != nil {
-                print(error!.localizedDescription)
+        if gcEnabled {
+            let scoreObj = GKScore(leaderboardIdentifier: LEADERBOARD_ID)
+            scoreObj.value = Int64(score)
+            GKScore.report([scoreObj]) { (error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                }
             }
         }
     }
+        
     
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil)
@@ -78,11 +120,49 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         self.present(gcVC, animated: true, completion: nil)
     }
     
-    func openAbout() {
-        let about = AboutController()
-        about.modalTransitionStyle = .crossDissolve
-        about.modalPresentationStyle = .overCurrentContext
-        present(about, animated: true, completion: nil)
+    func openSettings() {
+        let settings = SettingsController()
+        let naviController = UINavigationController(rootViewController: settings)
+        naviController.modalTransitionStyle = .coverVertical
+        naviController.modalPresentationStyle = .currentContext
+        present(naviController, animated: true, completion: nil)
+    }
+    
+    func openTutorial() {
+        let tut = TutorialController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        let naviController = UINavigationController(rootViewController: tut)
+        naviController.modalTransitionStyle = .coverVertical
+        naviController.modalPresentationStyle = .currentContext
+        present(naviController, animated: true, completion: nil)
+    }
+    
+    var interstitial: GADInterstitial?
+    
+    func configureAd() {
+        
+        #if DEBUG
+            interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        #else
+            interstitial = GADInterstitial(adUnitID: "ca-app-pub-7877293326290287/9674219782")
+        #endif
+        
+        interstitial?.delegate = self
+        interstitial?.load(GADRequest())
+    }
+    
+    func openAd() {
+        guard let inter = interstitial, !UserDefaults.standard.bool(forKey: Keys.adsDisabled) else {
+            return
+        }
+        if inter.isReady {
+            inter.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+        }
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        configureAd()
     }
 
     override var shouldAutorotate: Bool {
@@ -91,9 +171,5 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 }
