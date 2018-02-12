@@ -173,7 +173,9 @@ class GameView: SKShapeNode {
                     
                     if node.contains(location) && node != movable {
                         hapticNode = node
-                        movable.position = node.position
+                        if !UserDefaults.standard.bool(forKey: Keys.hapticDisabled) {
+                            movable.position = node.position
+                        }
                         return
                     }
                 }
@@ -265,8 +267,11 @@ class GameView: SKShapeNode {
             playSound = SKAction.wait(forDuration: 0)
         }
         
-        node.run(SKAction.sequence([SKAction.wait(forDuration: 0.3), playSound]), completion:  {
-            node.removeFromParent()
+        prepareHaptic()
+        
+        node.run(SKAction.wait(forDuration: 0.3), completion:  {
+            self.createHaptic(type: .thirteen)
+            node.run(SKAction.sequence([playSound,SKAction.removeFromParent()]))
             self.score += 13
         })
         
@@ -358,6 +363,10 @@ class GameView: SKShapeNode {
     
     enum hapticType {
         case gameOver, blinking, snap, thirteen
+    }
+    
+    func prepareHaptic() {
+        notification.prepare()
     }
     
     func createHaptic(type: hapticType) {

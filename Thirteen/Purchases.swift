@@ -13,7 +13,7 @@ enum IAPHandlerAlertType{
     case disabled
     case restored
     case purchased
-    case failed
+    case failed(Error?)
     
     func message() -> String{
         switch self {
@@ -40,32 +40,42 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
     
     var purchaseHandler: ((IAPHandlerAlertType) -> Void)?
     var productFetchedHandler: ((SKProduct) -> Void)?
-    private var product = SKProduct()
+    var product: SKProduct?
     
     
     func canMakePurchases() -> Bool {
         return SKPaymentQueue.canMakePayments()
     }
     
-    func purchaseProduct(){
+    func purchaseProduct() {
+        guard let product = product else {
+            self.fetchAvailableProducts()
+            return
+        }
+        
         if self.canMakePurchases() {
             let payment = SKPayment(product: product)
-            SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
         } else {
             purchaseHandler?(.disabled)
         }
     }
     
+    func addSelf() {
+        SKPaymentQueue.default().add(self)
+    }
+    
+    func removeSelf() {
+        SKPaymentQueue.default().remove(self)
+    }
+    
     
     func restorePurchase() {
-        SKPaymentQueue.default().add(self)
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
     func fetchAvailableProducts() {
-        let productIdentifiers = NSSet(objects: "com.wjthieme.thirteen")
-        let productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
+        let productsRequest = SKProductsRequest(productIdentifiers: ["com.wjthieme.thirteen"])
         productsRequest.delegate = self
         productsRequest.start()
     }
@@ -87,13 +97,14 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
             if let trans = transaction as? SKPaymentTransaction {
                 switch trans.transactionState {
                 case .purchased:
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    SKPaymentQueue.default().finishTransaction(trans)
                     purchaseHandler?(.purchased)
                 case .failed:
-                    purchaseHandler?(.failed)
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    purchaseHandler?(.failed(trans.error))
+                    SKPaymentQueue.default().finishTransaction(trans)
                 case .restored:
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    purchaseHandler?(.restored)
+                    SKPaymentQueue.default().finishTransaction(trans)
                 default:
                     break
                 }

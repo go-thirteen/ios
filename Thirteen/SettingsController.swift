@@ -17,6 +17,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     var tableView: UITableView!
+    var spinner: UIActivityIndicatorView!
     
     struct Content {
         let title: String?
@@ -51,14 +52,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     
     var data: [Content] = []
     
-    var productPrice = "" {
-        didSet {
-            if productPrice != oldValue {
-                tableView.reloadData()
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,7 +75,13 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
+        spinner = UIActivityIndicatorView(frame: self.view.frame)
+        spinner.hidesWhenStopped = true
+        spinner.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        spinner.activityIndicatorViewStyle = .gray
+        
         self.view.addSubview(tableView)
+        self.view.addSubview(spinner)
         
         self.title = "Settings"
         
@@ -90,29 +89,56 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
             guard let strongSelf = self else {
                 return
             }
-            if type == .purchased {
+            switch type {
+            case .purchased, .restored:
                 let alertView = UIAlertController(title: "Thank You!", message: type.message(), preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertView.addAction(action)
                 strongSelf.present(alertView, animated: true, completion: nil)
                 UserDefaults.standard.set(true, forKey: Keys.adsDisabled)
-            } else if type == .restored {
-                let alertView = UIAlertController(title: "Product Restored", message: type.message(), preferredStyle: .alert)
+            case .failed(let error):
+                let alertView = UIAlertController(title: "Purchase Failed", message: error?.localizedDescription ?? "", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertView.addAction(action)
                 strongSelf.present(alertView, animated: true, completion: nil)
-                UserDefaults.standard.set(true, forKey: Keys.adsDisabled)
-            } else if type == .failed {
-                let alertView = UIAlertController(title: "Purchase Failed", message: type.message(), preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alertView.addAction(action)
-                strongSelf.present(alertView, animated: true, completion: nil)
+            default:
+                return
             }
             
+            strongSelf.stopSpinner()
             
             strongSelf.tableView.reloadData()
         }
         
+        Purchases.shared().productFetchedHandler = { [weak self] (product) in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.tableView.reloadData()
+        }
+        
+    }
+    
+    func startSpinner() {
+        navigationItem.leftBarButtonItem?.isEnabled = false
+        spinner.startAnimating()
+    }
+    
+    func stopSpinner() {
+        navigationItem.leftBarButtonItem?.isEnabled = true
+        spinner.stopAnimating()
+    }
+    
+    func parseProduct(_ product: SKProduct?) -> String? {
+        guard let product = product else {
+            return nil
+        }
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.formatterBehavior = .behavior10_4
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = product.priceLocale
+        return numberFormatter.string(from: product.price)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -152,7 +178,13 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
                 cell.textLabel?.textAlignment = .center
             } else if cont.cells[indexPath.row] == removeAds {
                 cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
-                cell.detailTextLabel?.text = productPrice
+                
+                if let price = parseProduct(Purchases.shared().product) {
+                    cell.detailTextLabel?.text = price
+                } else {
+                    Purchases.shared().fetchAvailableProducts()
+                }
+                
                 if UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
                     cell.textLabel?.textColor = Colors.disabled
                 }
@@ -198,9 +230,11 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         switch id {
         case removeAds:
             if !UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
+                startSpinner()
                 Purchases.shared().purchaseProduct()
             }
         case restore:
+            startSpinner()
             Purchases.shared().restorePurchase()
         case rateUs:
             SKStoreReviewController.requestReview()
@@ -274,28 +308,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     @objc func closeModal() {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        Purchases.shared().productFetchedHandler = { [weak self] (product) in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            let numberFormatter = NumberFormatter()
-            numberFormatter.formatterBehavior = .behavior10_4
-            numberFormatter.numberStyle = .currency
-            numberFormatter.locale = product.priceLocale
-            
-            strongSelf.productPrice = numberFormatter.string(from: product.price) ?? ""
-            
-        }
-        Purchases.shared().fetchAvailableProducts()
-        
-    }
-
     
 }
 
