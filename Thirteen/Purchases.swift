@@ -69,9 +69,12 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
         SKPaymentQueue.default().remove(self)
     }
     
-    
     func restorePurchase() {
-        SKPaymentQueue.default().restoreCompletedTransactions()
+        if self.canMakePurchases() {
+            SKPaymentQueue.default().restoreCompletedTransactions()
+        } else {
+            purchaseHandler?(.disabled)
+        }
     }
     
     func fetchAvailableProducts() {
@@ -80,7 +83,6 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
         productsRequest.start()
     }
     
-    
     func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
         if let prod = response.products.first {
             productFetchedHandler?(prod)
@@ -88,8 +90,17 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
         }
     }
     
+    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        purchaseHandler?(.failed(error))
+    }
+    
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        purchaseHandler?(.restored)
+        if (queue.transactions.count == 0) {
+            let error = NSError(domain: "", code: 0, userInfo: ["localizedDescription":"No purchases to restore"])
+            purchaseHandler?(.failed(error))
+        } else {
+            purchaseHandler?(.restored)
+        }
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
