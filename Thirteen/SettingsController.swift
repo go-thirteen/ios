@@ -185,7 +185,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 
                 if UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
-                    cell.textLabel?.textColor = Colors.disabled
+                    cell.textLabel?.text = "Already Purchased"
                 }
             } else {
                 cell.accessoryType = .disclosureIndicator
@@ -233,8 +233,10 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
                 Purchases.shared().purchaseProduct()
             }
         case restore:
-            startSpinner()
-            Purchases.shared().restorePurchase()
+            if !UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
+                startSpinner()
+                Purchases.shared().restorePurchase()
+            }
         case rateUs:
             SKStoreReviewController.requestReview()
         case about:
