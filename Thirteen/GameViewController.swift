@@ -47,7 +47,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GADI
         }
         
         configureAd()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -150,6 +149,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GADI
         interstitial?.load(GADRequest())
     }
     
+    var openAdASAP = false
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        if openAdASAP {
+            openAd()
+            openAdASAP = false
+        }
+    }
+    
     func openAd() {
         guard let inter = interstitial, !UserDefaults.standard.bool(forKey: Keys.adsDisabled) else {
             return
@@ -157,7 +164,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate, GADI
         if inter.isReady {
             inter.present(fromRootViewController: self)
         } else {
-            print("Ad wasn't ready")
+            openAdASAP = true
         }
     }
     

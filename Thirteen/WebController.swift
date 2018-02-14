@@ -6,14 +6,6 @@
 //  Copyright © 2018 Wilhelm Thieme. All rights reserved.
 //
 
-//
-//  TermsController.swift
-//  Coach
-//
-//  Created by Wilhelm Thieme on 1/9/18.
-//  Copyright © 2018 Wilhelm Thieme. All rights reserved.
-//
-
 import UIKit
 import WebKit
 

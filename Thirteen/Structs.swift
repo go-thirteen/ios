@@ -28,8 +28,6 @@ struct Colors {
         UIColor(red: 255/255, green: 127/255, blue: 127/255, alpha: 1),
         UIColor(red: 255/255, green: 153/255, blue: 153/255, alpha: 1)
     ]
-    
-    
 }
 
 struct Keys {

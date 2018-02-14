@@ -50,52 +50,164 @@ class GameView: SKShapeNode {
         return (self.frame.width + self.frame.height) * getFactor(factor)
     }
     
-    func addNode(_ times : Int) {
+    func meanValue() -> Int {
+        var total: Float = 0
+        var count: Float = 0
+        for node in nodes {
+            if node.oper == .plus {
+                total += Float(node.value)
+                count += 1
+            }
+        }
+        if count == 0 {
+            return 0
+        }
+        return Int(total/count)
+    }
+    
+    func count(above: Int) -> Int {
+        var count = 0
+        for node in nodes {
+            if node.value > above && node.oper == .plus {
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    func count(below: Int) -> Int {
+        var count = 0
+        for node in nodes {
+            if node.value < below && node.oper == .plus {
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    func multiplyCount() -> Int {
+        var count = 0
+        for node in nodes {
+            if node.oper == .multiply {
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    func addNodes(_ times : Int) {
         for _ in 0...times-1 {
-            let size = nodeWidth(factor: 1)
-            let node = BallNode(size: size)
-            
-            let op = Int(arc4random_uniform(101))
+            addNode()
+        }
+    }
+    
+    func addNode() {
+        let size = nodeWidth(factor: 1)
+        let node = BallNode(size: size)
         
-            if op < 10 {
-                node.oper = .multiply
-                let value = Int(arc4random_uniform(2))
-                if value == 0 {
-                    node.value = -1
-                } else if value == 1 {
-                    node.value = 2
+        #if DEBUG
+            print("mean: \(meanValue()), below0: \(count(below: 0)), above7: \(count(above: 7))")
+        #endif
+        
+        if meanValue() < -5 || meanValue() > 5 {
+            fixedMeanNode(node)
+        } else if count(below: 0) != count(above: 7) {
+            fixedValueNode(node)
+        } else {
+            randomNode(node)
+        }
+        
+        self.addChild(node)
+        self.nodes.append(node)
+        node.position = CGPoint(x: frame.width*0.5, y: frame.height*0.5)
+        
+        #if DEBUG
+            print("placed: \(node.oper ?? .plus), \(node.value)")
+        #endif
+        
+        guard largestCircleDiameterThatFits() / 2 > node.frame.height else {
+            gameOver()
+            return
+        }
+        
+        score += abs(node.value)
+        
+        if largestCircleDiameterThatFits() / 3 < nodeWidth(factor: 1) {
+            startBlinking()
+        } else {
+            stopBlinking()
+        }
+    }
+    
+    func fixedValueNode(_ node: BallNode) {
+        
+        node.oper = .plus
+        var number = generateNumber()
+        
+        if count(below: 0) > count(above: 7) {
+            while number <= 13 {
+                number = generateNumber()
+            }
+        } else {
+            while number >= 0 {
+                number = generateNumber()
+            }
+        }
+        node.value = number
+    }
+    
+    func fixedMeanNode(_ node: BallNode) {
+        let mean = meanValue()
+        node.oper = .plus
+        
+        var number = generateNumber()
+        
+        if mean < 0 {
+            while number <= mean {
+                number = generateNumber()
+            }
+        } else {
+            while number >= mean {
+                number = generateNumber()
+            }
+        }
+        
+        node.value = number
+    }
+    
+    func randomNode(_ node: BallNode) {
+        let op = Int(arc4random_uniform(101))
+        
+        if op < 10 && multiplyCount() < 2 {
+            node.oper = .multiply
+            let value = Int(arc4random_uniform(2))
+            if value == 0 {
+                node.value = -1
+            } else if value == 1 {
+                node.value = 2
+            }
+        } else {
+            node.oper = .plus
+            
+            var value = generateNumber()
+            
+            if count(below: 0) > 1 || count(above: 7) > 1 {
+                while value <= 0 || value >= 13 {
+                    value = generateNumber()
                 }
-            } else if op >= 10 {
-                node.oper = .plus
-            
-                let value = generateNumber()
-            
-                node.value = value
-            }
-            
-            if largestCircleDiameterThatFits() / 2 < node.frame.height {
-                gameOver()
-                return
             }
         
-            self.addChild(node)
-            score += abs(node.value)
-            self.nodes.append(node)
-            node.position = CGPoint(x: frame.width*0.5, y: frame.height*0.5)
             
-            if largestCircleDiameterThatFits() / 3 < nodeWidth(factor: 1) {
-                startBlinking()
-            } else {
-                stopBlinking()
-            }
+            node.value = value
         }
     }
     
     func generateNumber() -> Int {
         var random = 0
         for _ in 0...9 {
-            random += Int(arc4random_uniform(3)) - 1
+            random += Int(arc4random_uniform(11)) - 5
         }
+        random += 6
         
         if random == 0 || random == 13 {
             random = generateNumber()
@@ -226,9 +338,9 @@ class GameView: SKShapeNode {
                         
                         if node.value == 13 && node.oper == .plus {
                             pop(node)
-                            addNode(2)
+                            addNodes(2)
                         } else {
-                            addNode(1)
+                            addNodes(1)
                         }
                         
                         movableNode = nil
@@ -293,10 +405,10 @@ class GameView: SKShapeNode {
             self.addChild(gameOverNode)
             running = false
             vc.updateGC(score)
+            vc.openAd()
             stopBlinking()
             createHaptic(type: .gameOver)
         }
-
     }
     
     func restart() {
@@ -306,7 +418,7 @@ class GameView: SKShapeNode {
         
         clearBoard()
         score = 0
-        addNode(10)
+        addNodes(10)
         gameOverNode.removeFromParent()
         running = true
         
@@ -370,7 +482,7 @@ class GameView: SKShapeNode {
     }
     
     func createHaptic(type: hapticType) {
-        guard !UserDefaults.standard.bool(forKey: Keys.hapticDisabled) else {
+        guard !UserDefaults.standard.bool(forKey: Keys.hapticDisabled)  else {
             return
         }
         

@@ -95,7 +95,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertView.addAction(action)
                 strongSelf.present(alertView, animated: true, completion: nil)
-                UserDefaults.standard.set(true, forKey: Keys.adsDisabled)
             case .failed(let error):
                 let alertView = UIAlertController(title: "Purchase Failed", message: error?.localizedDescription ?? "", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)

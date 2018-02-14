@@ -34,14 +34,21 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
     override init() {
         super.init()
         
-        
     }
-    
     
     var purchaseHandler: ((IAPHandlerAlertType) -> Void)?
     var productFetchedHandler: ((SKProduct) -> Void)?
     var product: SKProduct?
     
+    func handlePurchase(_ state: IAPHandlerAlertType) {
+        switch state {
+        case .restored, .purchased:
+            UserDefaults.standard.set(true, forKey: Keys.adsDisabled)
+        default:
+            break
+        }
+        purchaseHandler?(state)
+    }
     
     func canMakePurchases() -> Bool {
         return SKPaymentQueue.canMakePayments()
@@ -57,7 +64,7 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(payment)
         } else {
-            purchaseHandler?(.disabled)
+            handlePurchase(.disabled)
         }
     }
     
@@ -73,7 +80,7 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
         if self.canMakePurchases() {
             SKPaymentQueue.default().restoreCompletedTransactions()
         } else {
-            purchaseHandler?(.disabled)
+            handlePurchase(.disabled)
         }
     }
     
@@ -91,34 +98,32 @@ class Purchases: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        purchaseHandler?(.failed(error))
+        handlePurchase(.failed(error))
     }
     
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         if (queue.transactions.count == 0) {
             let error = NSError(domain: "", code: 0, userInfo: ["localizedDescription":"No purchases to restore"])
-            purchaseHandler?(.failed(error))
+            handlePurchase(.failed(error))
         } else {
-            purchaseHandler?(.restored)
+            handlePurchase(.restored)
         }
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction:AnyObject in transactions {
-            if let trans = transaction as? SKPaymentTransaction {
-                switch trans.transactionState {
-                case .purchased:
-                    SKPaymentQueue.default().finishTransaction(trans)
-                    purchaseHandler?(.purchased)
-                case .failed:
-                    purchaseHandler?(.failed(trans.error))
-                    SKPaymentQueue.default().finishTransaction(trans)
-                case .restored:
-                    purchaseHandler?(.restored)
-                    SKPaymentQueue.default().finishTransaction(trans)
-                default:
-                    break
-                }
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                handlePurchase(.purchased)
+                SKPaymentQueue.default().finishTransaction(transaction)
+            case .failed:
+                handlePurchase(.failed(transaction.error))
+                SKPaymentQueue.default().finishTransaction(transaction)
+            case .restored:
+                handlePurchase(.restored)
+                SKPaymentQueue.default().finishTransaction(transaction)
+            default:
+                break
             }
         }
     }

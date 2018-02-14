@@ -30,7 +30,6 @@ class TutorialController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.view.backgroundColor = .white
         
         
-        
         one.num = 1
         two.num = 2
         three.num = 3

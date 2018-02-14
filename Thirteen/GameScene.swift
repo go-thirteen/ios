@@ -115,17 +115,9 @@ class GameScene: SKScene {
         startButton()
     }
 
-    var first = true
     @objc func startButton() {
         gameNode.restart()
         buttonNode.title = "Restart"
-        
-        if !first {
-            if let vc = self.view?.window?.rootViewController as? GameViewController {
-                vc.openAd()
-            }
-        }
-        first = false
     }
     
     func updateScore(_ score : Int) {

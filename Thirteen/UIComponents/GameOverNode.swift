@@ -29,6 +29,9 @@ class GameOverNode : SKShapeNode {
         label.text = "Game Over!"
         label.fontColor = UIColor.darkGray
         label.fontSize = 50 //dependant on size
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            label.fontSize *= 2
+        }
         label.position = CGPoint(x: rect.midX, y: rect.midY)
         addChild(label)
         
