@@ -352,6 +352,7 @@ class GameView: SKShapeNode {
                 movable.isPickedUp = false
                 movableNode = nil
             }
+            deselectAll()
         }
     }
     
@@ -359,6 +360,13 @@ class GameView: SKShapeNode {
         if let movable = movableNode {
             movable.isPickedUp = false
             movableNode = nil
+        }
+        deselectAll()
+    }
+    
+    func deselectAll() {
+        for node in nodes {
+            node.isSelected = false
         }
     }
     

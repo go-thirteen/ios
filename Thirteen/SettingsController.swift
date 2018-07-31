@@ -67,6 +67,10 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
             Content(title: nil, cells: [""], type: .logo),
         ]
         
+        if UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
+            data.remove(at: 1)
+        }
+        
         tableView = UITableView(frame: self.view.frame, style: .grouped)
         tableView.separatorStyle = .none
         tableView.bounces = true
@@ -175,6 +179,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
             if cont.cells[indexPath.row] == restore {
                 cell.textLabel?.frame.size = CGSize(width: self.view.frame.width, height: CGFloat(44))
                 cell.textLabel?.textAlignment = .center
+                
             } else if cont.cells[indexPath.row] == removeAds {
                 cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
                 
@@ -184,9 +189,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
                     Purchases.shared().fetchAvailableProducts()
                 }
                 
-                if UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
-                    cell.textLabel?.text = "Already Purchased"
-                }
             } else {
                 cell.accessoryType = .disclosureIndicator
             }
@@ -228,15 +230,11 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         
         switch id {
         case removeAds:
-            if !UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
-                startSpinner()
-                Purchases.shared().purchaseProduct()
-            }
+            startSpinner()
+            Purchases.shared().purchaseProduct()
         case restore:
-            if !UserDefaults.standard.bool(forKey: Keys.adsDisabled) {
-                startSpinner()
-                Purchases.shared().restorePurchase()
-            }
+            startSpinner()
+            Purchases.shared().restorePurchase()
         case rateUs:
             SKStoreReviewController.requestReview()
         case about:

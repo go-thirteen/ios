@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMobileAds
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.configure(withApplicationID: "ca-app-pub-7877293326290287~3079648006")
         Purchases.shared().addSelf()
         Purchases.shared().fetchAvailableProducts()
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         return true
     }
 
