@@ -1,6 +1,0 @@
-framework module Pods_Thirteen {
-  umbrella header "Pods-Thirteen-umbrella.h"
-
-  export *
-  module * { export * }
-}

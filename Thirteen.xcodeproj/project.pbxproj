@@ -7,77 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF878D0B27A1A9101AB1E7D1 /* Pods_Thirteen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9A02E497FEFD9C38944F40B /* Pods_Thirteen.framework */; };
-		ED5DFAE7202CAD9C001D3972 /* Pop4.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFAD1202CAD9C001D3972 /* Pop4.wav */; };
-		ED5DFAE8202CAD9C001D3972 /* Pop0.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFAD2202CAD9C001D3972 /* Pop0.wav */; };
-		ED5DFAE9202CAD9C001D3972 /* Pop1.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFAD3202CAD9C001D3972 /* Pop1.wav */; };
-		ED5DFAEA202CAD9C001D3972 /* Pop3.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFAD4202CAD9C001D3972 /* Pop3.wav */; };
-		ED5DFAEB202CAD9C001D3972 /* Pop2.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFAD5202CAD9C001D3972 /* Pop2.wav */; };
-		ED5DFAEC202CAD9C001D3972 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAD6202CAD9C001D3972 /* GameScene.swift */; };
-		ED5DFAED202CAD9C001D3972 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAD7202CAD9C001D3972 /* GameViewController.swift */; };
-		ED5DFAEE202CAD9C001D3972 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFAD9202CAD9C001D3972 /* LaunchScreen.storyboard */; };
-		ED5DFAEF202CAD9C001D3972 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFADB202CAD9C001D3972 /* Main.storyboard */; };
 		ED5DFAF0202CAD9C001D3972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFADD202CAD9C001D3972 /* Assets.xcassets */; };
 		ED5DFAF1202CAD9C001D3972 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFADE202CAD9C001D3972 /* AppDelegate.swift */; };
-		ED5DFAF2202CAD9C001D3972 /* BallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE0202CAD9C001D3972 /* BallNode.swift */; };
-		ED5DFAF3202CAD9C001D3972 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE1202CAD9C001D3972 /* GameView.swift */; };
-		ED5DFAF4202CAD9C001D3972 /* GameOverNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE2202CAD9C001D3972 /* GameOverNode.swift */; };
-		ED5DFAF5202CAD9C001D3972 /* NoEscapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE3202CAD9C001D3972 /* NoEscapeNode.swift */; };
-		ED5DFAF6202CAD9C001D3972 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE4202CAD9C001D3972 /* ScoreView.swift */; };
-		ED5DFAF7202CAD9C001D3972 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAE5202CAD9C001D3972 /* ButtonView.swift */; };
-		ED5DFAFB202CAE57001D3972 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED5DFAFA202CAE57001D3972 /* GameKit.framework */; };
-		ED5DFAFD202CB3A9001D3972 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAFC202CB3A9001D3972 /* AboutController.swift */; };
-		ED5DFAFF202CB50B001D3972 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFAFE202CB50B001D3972 /* ButtonNode.swift */; };
-		ED5DFB03202F4A20001D3972 /* TutorialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFB02202F4A20001D3972 /* TutorialController.swift */; };
-		ED5DFB09202F6B6C001D3972 /* frame.png in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFB05202F6B6C001D3972 /* frame.png */; };
-		ED81C7232030970200B9A1D0 /* Pods-Thirteen-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED81C7222030970200B9A1D0 /* Pods-Thirteen-acknowledgements.plist */; };
-		ED81C7252030A3A400B9A1D0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED81C7242030A3A400B9A1D0 /* StoreKit.framework */; };
-		ED81C7272030AAC300B9A1D0 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED81C7262030AAC300B9A1D0 /* Purchases.swift */; };
-		ED81C7292030BD0000B9A1D0 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED81C7282030BD0000B9A1D0 /* Structs.swift */; };
-		ED90436B20305993009E90A1 /* 1.gif in Resources */ = {isa = PBXBuildFile; fileRef = ED90436A20305993009E90A1 /* 1.gif */; };
-		ED90436D20305A99009E90A1 /* 2.gif in Resources */ = {isa = PBXBuildFile; fileRef = ED90436C20305A99009E90A1 /* 2.gif */; };
-		ED90436F20305ACA009E90A1 /* 3.gif in Resources */ = {isa = PBXBuildFile; fileRef = ED90436E20305ACA009E90A1 /* 3.gif */; };
-		ED90437120308A0D009E90A1 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED90437020308A0D009E90A1 /* SettingsController.swift */; };
-		ED9043732030900D009E90A1 /* WebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9043722030900D009E90A1 /* WebController.swift */; };
+		EDA9C7262424C16D0088121C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C7252424C16D0088121C /* ViewController.swift */; };
+		EDA9C7562424C1B80088121C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDA9C7552424C1B80088121C /* LaunchScreen.storyboard */; };
+		EDA9C75C2424C8390088121C /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C75B2424C8390088121C /* Constraint.swift */; };
+		EDA9C75E2424C85A0088121C /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C75D2424C85A0088121C /* LocalizedString.swift */; };
+		EDA9C7602424C8730088121C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EDA9C75F2424C8730088121C /* Settings.bundle */; };
+		EDA9C7652424C89E0088121C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDA9C7672424C89E0088121C /* Localizable.strings */; };
+		EDA9C76A2424C8F10088121C /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C7692424C8F10088121C /* Defaults.swift */; };
+		EDA9C76D242505D30088121C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C76C242505D30088121C /* GameView.swift */; };
+		EDA9C76F24250B440088121C /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDA9C76E24250B440088121C /* Colors.xcassets */; };
+		EDA9C771242512550088121C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C770242512550088121C /* GridView.swift */; };
+		EDA9C773242542AE0088121C /* GameSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C772242542AE0088121C /* GameSquare.swift */; };
+		EDA9C77524254CF90088121C /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C77424254CF90088121C /* Board.swift */; };
+		EDA9C777242550A50088121C /* Choice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C776242550A50088121C /* Choice.swift */; };
+		EDA9C77D242A59490088121C /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C77C242A59490088121C /* Square.swift */; };
+		EDA9C77F242A5D290088121C /* GameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C77E242A5D290088121C /* GameCenter.swift */; };
+		EDA9C781242A68550088121C /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C780242A68550088121C /* ScoreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A78AD0A1B0D2A1A8113EA5F4 /* Pods-Thirteen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thirteen.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Thirteen/Pods-Thirteen.debug.xcconfig"; sourceTree = "<group>"; };
-		B9A02E497FEFD9C38944F40B /* Pods_Thirteen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Thirteen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5DFAB4202CAD57001D3972 /* Thirteen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thirteen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5DFACF202CAD9C001D3972 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ED5DFAD1202CAD9C001D3972 /* Pop4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pop4.wav; sourceTree = "<group>"; };
-		ED5DFAD2202CAD9C001D3972 /* Pop0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pop0.wav; sourceTree = "<group>"; };
-		ED5DFAD3202CAD9C001D3972 /* Pop1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pop1.wav; sourceTree = "<group>"; };
-		ED5DFAD4202CAD9C001D3972 /* Pop3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pop3.wav; sourceTree = "<group>"; };
-		ED5DFAD5202CAD9C001D3972 /* Pop2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pop2.wav; sourceTree = "<group>"; };
-		ED5DFAD6202CAD9C001D3972 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		ED5DFAD7202CAD9C001D3972 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		ED5DFADA202CAD9C001D3972 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		ED5DFADC202CAD9C001D3972 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED5DFADD202CAD9C001D3972 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED5DFADE202CAD9C001D3972 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ED5DFAE0202CAD9C001D3972 /* BallNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallNode.swift; sourceTree = "<group>"; };
-		ED5DFAE1202CAD9C001D3972 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		ED5DFAE2202CAD9C001D3972 /* GameOverNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverNode.swift; sourceTree = "<group>"; };
-		ED5DFAE3202CAD9C001D3972 /* NoEscapeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoEscapeNode.swift; sourceTree = "<group>"; };
-		ED5DFAE4202CAD9C001D3972 /* ScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
-		ED5DFAE5202CAD9C001D3972 /* ButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
-		ED5DFAFA202CAE57001D3972 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		ED5DFAFC202CB3A9001D3972 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
-		ED5DFAFE202CB50B001D3972 /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
-		ED5DFB02202F4A20001D3972 /* TutorialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialController.swift; sourceTree = "<group>"; };
-		ED5DFB05202F6B6C001D3972 /* frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame.png; sourceTree = "<group>"; };
-		ED81C7222030970200B9A1D0 /* Pods-Thirteen-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Pods-Thirteen-acknowledgements.plist"; path = "Pods/Target Support Files/Pods-Thirteen/Pods-Thirteen-acknowledgements.plist"; sourceTree = SOURCE_ROOT; };
-		ED81C7242030A3A400B9A1D0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		ED81C7262030AAC300B9A1D0 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
-		ED81C7282030BD0000B9A1D0 /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
-		ED90436A20305993009E90A1 /* 1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 1.gif; sourceTree = "<group>"; };
-		ED90436C20305A99009E90A1 /* 2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 2.gif; sourceTree = "<group>"; };
-		ED90436E20305ACA009E90A1 /* 3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 3.gif; sourceTree = "<group>"; };
-		ED90437020308A0D009E90A1 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
-		ED9043722030900D009E90A1 /* WebController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebController.swift; sourceTree = "<group>"; };
-		FCC79EFD5259A8509A977035 /* Pods-Thirteen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thirteen.release.xcconfig"; path = "Pods/Target Support Files/Pods-Thirteen/Pods-Thirteen.release.xcconfig"; sourceTree = "<group>"; };
+		EDA9C7252424C16D0088121C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EDA9C7552424C1B80088121C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EDA9C75B2424C8390088121C /* Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
+		EDA9C75D2424C85A0088121C /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
+		EDA9C75F2424C8730088121C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		EDA9C7662424C89E0088121C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EDA9C7682424C8A30088121C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EDA9C7692424C8F10088121C /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		EDA9C76C242505D30088121C /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		EDA9C76E24250B440088121C /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		EDA9C770242512550088121C /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		EDA9C772242542AE0088121C /* GameSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSquare.swift; sourceTree = "<group>"; };
+		EDA9C77424254CF90088121C /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		EDA9C776242550A50088121C /* Choice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Choice.swift; sourceTree = "<group>"; };
+		EDA9C77C242A59490088121C /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
+		EDA9C77E242A5D290088121C /* GameCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenter.swift; sourceTree = "<group>"; };
+		EDA9C780242A68550088121C /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,31 +56,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED81C7252030A3A400B9A1D0 /* StoreKit.framework in Frameworks */,
-				ED5DFAFB202CAE57001D3972 /* GameKit.framework in Frameworks */,
-				CF878D0B27A1A9101AB1E7D1 /* Pods_Thirteen.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		96B9A698798E4E5A99384736 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A78AD0A1B0D2A1A8113EA5F4 /* Pods-Thirteen.debug.xcconfig */,
-				FCC79EFD5259A8509A977035 /* Pods-Thirteen.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		ED5DFAAB202CAD57001D3972 = {
 			isa = PBXGroup;
 			children = (
 				ED5DFAB6202CAD57001D3972 /* Thirteen */,
 				ED5DFAB5202CAD57001D3972 /* Products */,
-				ED5DFAF9202CAE57001D3972 /* Frameworks */,
-				96B9A698798E4E5A99384736 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,79 +82,74 @@
 			isa = PBXGroup;
 			children = (
 				ED5DFADE202CAD9C001D3972 /* AppDelegate.swift */,
-				ED81C7262030AAC300B9A1D0 /* Purchases.swift */,
-				ED81C7282030BD0000B9A1D0 /* Structs.swift */,
-				ED5DFADD202CAD9C001D3972 /* Assets.xcassets */,
-				ED5DFAD7202CAD9C001D3972 /* GameViewController.swift */,
-				ED5DFB02202F4A20001D3972 /* TutorialController.swift */,
-				ED90437020308A0D009E90A1 /* SettingsController.swift */,
-				ED9043722030900D009E90A1 /* WebController.swift */,
-				ED5DFAFC202CB3A9001D3972 /* AboutController.swift */,
-				ED5DFAD6202CAD9C001D3972 /* GameScene.swift */,
-				ED5DFADF202CAD9C001D3972 /* UIComponents */,
-				ED5DFAD8202CAD9C001D3972 /* Storyboards */,
-				ED5DFAD0202CAD9C001D3972 /* Sounds */,
-				ED5DFB04202F6B55001D3972 /* res */,
+				EDA9C7632424C8850088121C /* Localizations */,
+				EDA9C7642424C8910088121C /* Controllers */,
+				EDA9C77B242A593B0088121C /* Model */,
+				EDA9C76B242505BD0088121C /* Views */,
+				EDA9C7622424C87F0088121C /* Utilities */,
+				EDA9C7612424C8780088121C /* Resources */,
+				EDA9C75F2424C8730088121C /* Settings.bundle */,
 				ED5DFACF202CAD9C001D3972 /* Info.plist */,
-				ED81C7222030970200B9A1D0 /* Pods-Thirteen-acknowledgements.plist */,
 			);
 			path = Thirteen;
 			sourceTree = "<group>";
 		};
-		ED5DFAD0202CAD9C001D3972 /* Sounds */ = {
+		EDA9C7612424C8780088121C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				ED5DFAD1202CAD9C001D3972 /* Pop4.wav */,
-				ED5DFAD2202CAD9C001D3972 /* Pop0.wav */,
-				ED5DFAD3202CAD9C001D3972 /* Pop1.wav */,
-				ED5DFAD4202CAD9C001D3972 /* Pop3.wav */,
-				ED5DFAD5202CAD9C001D3972 /* Pop2.wav */,
+				EDA9C7552424C1B80088121C /* LaunchScreen.storyboard */,
+				ED5DFADD202CAD9C001D3972 /* Assets.xcassets */,
+				EDA9C76E24250B440088121C /* Colors.xcassets */,
 			);
-			path = Sounds;
+			path = Resources;
 			sourceTree = "<group>";
 		};
-		ED5DFAD8202CAD9C001D3972 /* Storyboards */ = {
+		EDA9C7622424C87F0088121C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				ED5DFAD9202CAD9C001D3972 /* LaunchScreen.storyboard */,
-				ED5DFADB202CAD9C001D3972 /* Main.storyboard */,
+				EDA9C75B2424C8390088121C /* Constraint.swift */,
+				EDA9C776242550A50088121C /* Choice.swift */,
+				EDA9C7692424C8F10088121C /* Defaults.swift */,
+				EDA9C75D2424C85A0088121C /* LocalizedString.swift */,
+				EDA9C77E242A5D290088121C /* GameCenter.swift */,
 			);
-			path = Storyboards;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
-		ED5DFADF202CAD9C001D3972 /* UIComponents */ = {
+		EDA9C7632424C8850088121C /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
-				ED5DFAE0202CAD9C001D3972 /* BallNode.swift */,
-				ED5DFAE1202CAD9C001D3972 /* GameView.swift */,
-				ED5DFAE2202CAD9C001D3972 /* GameOverNode.swift */,
-				ED5DFAE3202CAD9C001D3972 /* NoEscapeNode.swift */,
-				ED5DFAE4202CAD9C001D3972 /* ScoreView.swift */,
-				ED5DFAE5202CAD9C001D3972 /* ButtonView.swift */,
-				ED5DFAFE202CB50B001D3972 /* ButtonNode.swift */,
+				EDA9C7672424C89E0088121C /* Localizable.strings */,
 			);
-			path = UIComponents;
+			path = Localizations;
 			sourceTree = "<group>";
 		};
-		ED5DFAF9202CAE57001D3972 /* Frameworks */ = {
+		EDA9C7642424C8910088121C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				ED81C7242030A3A400B9A1D0 /* StoreKit.framework */,
-				ED5DFAFA202CAE57001D3972 /* GameKit.framework */,
-				B9A02E497FEFD9C38944F40B /* Pods_Thirteen.framework */,
+				EDA9C7252424C16D0088121C /* ViewController.swift */,
 			);
-			name = Frameworks;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		ED5DFB04202F6B55001D3972 /* res */ = {
+		EDA9C76B242505BD0088121C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				ED90436A20305993009E90A1 /* 1.gif */,
-				ED90436C20305A99009E90A1 /* 2.gif */,
-				ED90436E20305ACA009E90A1 /* 3.gif */,
-				ED5DFB05202F6B6C001D3972 /* frame.png */,
+				EDA9C770242512550088121C /* GridView.swift */,
+				EDA9C76C242505D30088121C /* GameView.swift */,
+				EDA9C772242542AE0088121C /* GameSquare.swift */,
+				EDA9C780242A68550088121C /* ScoreView.swift */,
 			);
-			path = res;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EDA9C77B242A593B0088121C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EDA9C77424254CF90088121C /* Board.swift */,
+				EDA9C77C242A59490088121C /* Square.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,13 +159,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED5DFACC202CAD57001D3972 /* Build configuration list for PBXNativeTarget "Thirteen" */;
 			buildPhases = (
-				4B2B408975D3319C51ED90EB /* [CP] Check Pods Manifest.lock */,
 				ED5DFAB0202CAD57001D3972 /* Sources */,
 				ED5DFAB1202CAD57001D3972 /* Frameworks */,
 				ED5DFAB2202CAD57001D3972 /* Resources */,
 				ED5DFAF8202CAE21001D3972 /* [Script] Auto-Increment Build Number */,
-				CD3465B0CA5B6701A816D2C7 /* [CP] Embed Pods Frameworks */,
-				A5220D4E33D08E5BC9F919E9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -231,12 +180,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Wilhelm Thieme";
 				TargetAttributes = {
 					ED5DFAB3202CAD57001D3972 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
@@ -256,6 +205,7 @@
 			knownRegions = (
 				en,
 				Base,
+				nl,
 			);
 			mainGroup = ED5DFAAB202CAD57001D3972;
 			productRefGroup = ED5DFAB5202CAD57001D3972 /* Products */;
@@ -272,78 +222,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED5DFAE9202CAD9C001D3972 /* Pop1.wav in Resources */,
-				ED5DFAEB202CAD9C001D3972 /* Pop2.wav in Resources */,
-				ED81C7232030970200B9A1D0 /* Pods-Thirteen-acknowledgements.plist in Resources */,
-				ED90436F20305ACA009E90A1 /* 3.gif in Resources */,
-				ED5DFAEA202CAD9C001D3972 /* Pop3.wav in Resources */,
-				ED5DFAEF202CAD9C001D3972 /* Main.storyboard in Resources */,
-				ED5DFAEE202CAD9C001D3972 /* LaunchScreen.storyboard in Resources */,
-				ED90436D20305A99009E90A1 /* 2.gif in Resources */,
-				ED5DFB09202F6B6C001D3972 /* frame.png in Resources */,
-				ED5DFAE8202CAD9C001D3972 /* Pop0.wav in Resources */,
-				ED90436B20305993009E90A1 /* 1.gif in Resources */,
+				EDA9C76F24250B440088121C /* Colors.xcassets in Resources */,
+				EDA9C7602424C8730088121C /* Settings.bundle in Resources */,
 				ED5DFAF0202CAD9C001D3972 /* Assets.xcassets in Resources */,
-				ED5DFAE7202CAD9C001D3972 /* Pop4.wav in Resources */,
+				EDA9C7652424C89E0088121C /* Localizable.strings in Resources */,
+				EDA9C7562424C1B80088121C /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4B2B408975D3319C51ED90EB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Thirteen-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A5220D4E33D08E5BC9F919E9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Thirteen/Pods-Thirteen-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CD3465B0CA5B6701A816D2C7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Thirteen/Pods-Thirteen-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AcknowList/AcknowList.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AcknowList.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Thirteen/Pods-Thirteen-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		ED5DFAF8202CAE21001D3972 /* [Script] Auto-Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -356,7 +245,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -365,42 +254,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED81C7292030BD0000B9A1D0 /* Structs.swift in Sources */,
+				EDA9C75C2424C8390088121C /* Constraint.swift in Sources */,
+				EDA9C7262424C16D0088121C /* ViewController.swift in Sources */,
+				EDA9C77F242A5D290088121C /* GameCenter.swift in Sources */,
+				EDA9C76A2424C8F10088121C /* Defaults.swift in Sources */,
+				EDA9C771242512550088121C /* GridView.swift in Sources */,
+				EDA9C77D242A59490088121C /* Square.swift in Sources */,
+				EDA9C75E2424C85A0088121C /* LocalizedString.swift in Sources */,
+				EDA9C76D242505D30088121C /* GameView.swift in Sources */,
+				EDA9C777242550A50088121C /* Choice.swift in Sources */,
+				EDA9C773242542AE0088121C /* GameSquare.swift in Sources */,
 				ED5DFAF1202CAD9C001D3972 /* AppDelegate.swift in Sources */,
-				ED90437120308A0D009E90A1 /* SettingsController.swift in Sources */,
-				ED5DFAFD202CB3A9001D3972 /* AboutController.swift in Sources */,
-				ED5DFAFF202CB50B001D3972 /* ButtonNode.swift in Sources */,
-				ED5DFAF6202CAD9C001D3972 /* ScoreView.swift in Sources */,
-				ED5DFAED202CAD9C001D3972 /* GameViewController.swift in Sources */,
-				ED5DFAF2202CAD9C001D3972 /* BallNode.swift in Sources */,
-				ED5DFAEC202CAD9C001D3972 /* GameScene.swift in Sources */,
-				ED5DFAF3202CAD9C001D3972 /* GameView.swift in Sources */,
-				ED5DFAF4202CAD9C001D3972 /* GameOverNode.swift in Sources */,
-				ED9043732030900D009E90A1 /* WebController.swift in Sources */,
-				ED81C7272030AAC300B9A1D0 /* Purchases.swift in Sources */,
-				ED5DFAF5202CAD9C001D3972 /* NoEscapeNode.swift in Sources */,
-				ED5DFAF7202CAD9C001D3972 /* ButtonView.swift in Sources */,
-				ED5DFB03202F4A20001D3972 /* TutorialController.swift in Sources */,
+				EDA9C781242A68550088121C /* ScoreView.swift in Sources */,
+				EDA9C77524254CF90088121C /* Board.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		ED5DFAD9202CAD9C001D3972 /* LaunchScreen.storyboard */ = {
+		EDA9C7672424C89E0088121C /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				ED5DFADA202CAD9C001D3972 /* Base */,
+				EDA9C7662424C89E0088121C /* en */,
+				EDA9C7682424C8A30088121C /* nl */,
 			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		ED5DFADB202CAD9C001D3972 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ED5DFADC202CAD9C001D3972 /* Base */,
-			);
-			name = Main.storyboard;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -420,6 +299,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -427,6 +307,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -477,6 +358,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -484,6 +366,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -515,43 +398,41 @@
 		};
 		ED5DFACD202CAD57001D3972 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A78AD0A1B0D2A1A8113EA5F4 /* Pods-Thirteen.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = app.icon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9ELM74XG98;
 				INFOPLIST_FILE = Thirteen/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wjthieme.Thirteen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		ED5DFACE202CAD57001D3972 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FCC79EFD5259A8509A977035 /* Pods-Thirteen.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = app.icon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9ELM74XG98;
 				INFOPLIST_FILE = Thirteen/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wjthieme.Thirteen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
