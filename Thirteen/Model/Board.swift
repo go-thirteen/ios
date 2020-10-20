@@ -9,58 +9,83 @@
 import Foundation
 
 fileprivate let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("currentBoard.json")
-fileprivate let options: [(Float, Int)] = [(0.1, 1), (0.1, 2), (0.2, 3), (0.2, 4), (0.1, 5), (0.1, 6), (0.1, 7), (0.05, 8), (0.02, 9), (0.02, 10), (0.01, 11)]
 
-struct Board: Codable {
-    private var squares: [Square]
-    private(set) var score: Int = 0
-    var count: Int { return squares.count }
+class Board: Codable, FromSelf {
+    private final var squares: [IndexPath: Square]
+    class var rows: Int { return 0 }
+    class var columns: Int { return 0 }
+    final class var indexes: [IndexPath] { return (0..<rows).flatMap { r in (0..<columns).map { c in IndexPath(row: r, section: c) }  } }
     
-    subscript(i: Int) -> Square {
+    final var count: Int { return squares.count }
+    private(set) final var score: Int = 0
+    
+    private(set) final subscript(_ i: IndexPath) -> Square? {
         get { return squares[i] }
         set { squares[i] = newValue }
     }
     
-    init(_ count: Int, fresh: Bool = false) {
-        squares = Array(repeating: Square(), count: count)
-        
-        let fillSquares = count - Int(sqrt(Double(count)))
-        (0..<fillSquares).forEach { _ in fillSquare() }
-        
-        if fresh { return }
-        guard FileManager.default.fileExists(atPath: url.absoluteString) else { return }
-        guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else { return }
-        guard let obj = try? JSONDecoder().decode(Self.self, from: data) else { return }
-        guard obj.count == count else { return }
-        self = obj
-    }
-    
-    mutating func fillSquare() {
-        guard let value = Choice.choose(from: options) else { return }
-        var index = Int.random(in: 0..<count)
-        while !self[index].isEmpty {
-            index = Int.random(in: 0..<count)
+    required convenience init(fresh: Bool = false) {
+        do {
+            if fresh { throw NSError() }
+            let data = try Data(contentsOf: url, options: .mappedIfSafe)
+            let obj = try JSONDecoder().decode(Self.self, from: data)
+            print(String(data: data, encoding: .utf8)!)
+            try Self.indexes.forEach { if !obj.contains($0) { throw NSError() } }
+            self.init(from: obj)
+        } catch {
+            self.init()
         }
-        score += value
-        self[index].value = value
-//        let num = arc4random_uniform(UInt32(count))
     }
     
-    mutating func sumPositions(_ positions: [Int]) {
-        guard let last = positions.last(where: { !self[$0].isEmpty }) else { return }
-        let sum = positions.map({ self[$0].value }).reduce(0, +)
-        let addSquares = positions.filter({ !self[$0].isEmpty }).count - 1
-        positions.forEach { self[$0].value = 0 }
-        self[last].value = sum
-        (0..<addSquares).forEach { _ in fillSquare() }
+    private init() {
+        squares = Dictionary(uniqueKeysWithValues: Self.indexes.map { ($0, Square()) })
+        squares.forEach { $0.value.value = newValueAndAddScore() }
+        save()
     }
     
-    var gameover: [Int] {
-        return squares.enumerated().compactMap { $0.element.isGameover ? $0.offset : nil }
+    final func contains(_ indexPath: IndexPath) -> Bool {
+        return squares.keys.contains(indexPath)
     }
     
-    func save() {
+    final func save() {
         guard let data = try? JSONEncoder().encode(self) else { return }
         try? data.write(to: url, options: .atomicWrite)
     }
+    
+    final func sumPositions(_ indexPaths: [IndexPath]) {
+        var paths = indexPaths
+        let last = paths.removeLast()
+        let sum = reduce(indexPaths)
+        self[last]?.value = sum == 13 ? newValueAndAddScore() : sum
+        if sum == 13 { score += 13 }
+        paths.forEach { self[$0]?.value = newValueAndAddScore() }
+    }
+    
+    final func newValueAndAddScore() -> Int {
+        let value = newValue()
+        score += score(for: value)
+        return value
+    }
+    
+    func reduce(_ values: [IndexPath]) -> Int {
+        return 0
+    }
+
+    
+    func newValue() -> Int {
+        return 0
+    }
+    
+    func score(for value: Int) -> Int {
+        return 0
+    }
+    
+    var isGameOver: Bool {
+       return false
+    }
+    
+    func canAdd(indexPath: IndexPath, to selection: [IndexPath]) -> Bool {
+        return true
+    }
+    
 }

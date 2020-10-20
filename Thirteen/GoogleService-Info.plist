@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>188317807243-atsqe9lq4s8gleqggppi9br4c7k3f2bv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.188317807243-atsqe9lq4s8gleqggppi9br4c7k3f2bv</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDvodBNRYoaLTVSjZ0-X_UwlO7Y-Ku0uGY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>188317807243</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.wjthieme.Thirteen</string>
+	<key>PROJECT_ID</key>
+	<string>thirteen-7c23a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>thirteen-7c23a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:188317807243:ios:e6d9b7e8a90de95c31da8e</string>
+	<key>DATABASE_URL</key>
+	<string>https://thirteen-7c23a.firebaseio.com</string>
+</dict>
+</plist>

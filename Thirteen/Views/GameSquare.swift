@@ -10,26 +10,30 @@ import UIKit
 
 class GameSquare: UIView {
     
-    var value = 0 { didSet { label.text = value == 0 ? "" : "\(value)" }}
-    
     private let label = UILabel()
+    var text: String? {
+        get { return label.text }
+        set { label.text = newValue}
+    }
     
-    init() {
+    
+    init(spacing: CGFloat) {
         super.init(frame: .zero)
         
         label.textAlignment = .center
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         addSubview(label)
-        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4).activated()
-        label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4).activated()
-        label.topAnchor.constraint(equalTo: topAnchor, constant: 4).activated()
-        label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4).activated()
+        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: spacing).isActive = true
+        label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing).isActive = true
+        label.topAnchor.constraint(equalTo: topAnchor, constant: spacing).isActive = true
+        label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -spacing).isActive = true
         
-        
+        layer.cornerRadius = 4
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
 }

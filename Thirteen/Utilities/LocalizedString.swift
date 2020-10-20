@@ -8,7 +8,7 @@
 
 import Foundation
 
-func LocalizedString(_ key: String, _ options: String...) -> String {
+func localizedString(_ key: String, _ options: String...) -> String {
     var string = NSLocalizedString(key, comment: "")
     (0..<options.count).forEach { string = string.replacingOccurrences(of: "%\($0)", with: options[$0]) }
     return string
@@ -24,17 +24,12 @@ func localizedDate(_ date: Date, dateStyle: DateFormatter.Style, timeStyle: Date
     return formatter.string(from: date)
 }
 
-func formattedCurrency(_ amount: Float, _ currency: String) -> String {
-    let rounded = String(format: "%.2f", amount)
-    let symbol = currencySymbol(currency)
-    return "\(symbol) \(rounded)"
-}
-
-func currencySymbol(_ code: String) -> String {
-    let locale = NSLocale(localeIdentifier: code)
-    if locale.displayName(forKey: .currencySymbol, value: code) == code {
-        let newlocale = NSLocale(localeIdentifier: code.dropLast() + "_en")
-        return newlocale.displayName(forKey: .currencySymbol, value: code) ?? code
+func localizedNumber(_ int: Int) -> String {
+    if int >= 1000000 {
+        return String(format: "%.1fM", locale: Locale.current, Float(int)/1000000).replacingOccurrences(of: ".0", with: "")
     }
-    return locale.displayName(forKey: .currencySymbol, value: code) ?? code
+    if int >= 1000 {
+        return String(format: "%.1fK", locale: Locale.current, Float(int)/1000).replacingOccurrences(of: ".0", with: "")
+    }
+    return "\(int)"
 }

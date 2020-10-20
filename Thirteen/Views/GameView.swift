@@ -8,96 +8,130 @@
 
 import UIKit
 
+@objc protocol GameViewDataSource: AnyObject {
+    @objc optional func gameView(numberOfRowsIn gameView: GameView) -> Int
+    @objc optional func gameView(numberOfSectionsIn gameView: GameView) -> Int
+    @objc optional func gameView(_ gameView: GameView, valueFor indexPath: IndexPath) -> String
+}
 
-//fileprivate let num = Int(pow(Float(dim), 2))
+@objc protocol GameViewDelegate: AnyObject {
+    @objc optional func gameView(_ gameView: GameView, didComit selection: [IndexPath])
+    @objc optional func gameView(_ gameView: GameView, shouldCombine indexPath: IndexPath, with group: [IndexPath]) -> Bool
+}
 
-class GameView: GridView<GameSquare> {
+class GameView: UIView {
     
-    var didHighlightPositions: (([Int]) -> Void)?
-    var didSelectPositions: (([Int]) -> Void)?
+    private var arrangedSubviews: [IndexPath: GameSquare] = [:]
     
-    private let dimension: Int
+    private var selectedIndexPaths: [IndexPath] = []
+    private var rows: Int = 3
+    private var columns: Int = 3
     
-    override init(_ dim: Int) {
-        dimension = dim
-        super.init(dim)
-        backgroundColor = .secondarySystemBackground
-        
-        arrangedSubviews.forEach {
-            $0.backgroundColor = .blue
-            $0.isUserInteractionEnabled = false
-        }
-        
+    var spacing: CGFloat = 8
+    @IBOutlet weak var dataSource: GameViewDataSource?
+    @IBOutlet weak var delegate: GameViewDelegate?
+    
+    
+    init() {
+        super.init(frame: .zero)
     }
     
-    
-    private var startPosition: CGPoint?
-    private var endPosition: CGPoint?
-    private var selectedPositions: [Int] {
-        guard let start = startPosition else { return [] }
-        guard var end = endPosition else { return [] }
-        let d = CGPoint(x: end.x - start.x, y:  end.y - start.y)
-        let horizontal = abs(d.x) > abs(d.y)
-        end = horizontal ? CGPoint(x: end.x, y: start.y) : CGPoint(x: start.x, y: end.y)
-        
-        let startIndex = position(of: start)
-        let endIindex = position(of: end)
-        let reversed = startIndex > endIindex
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 
-        let rhs = horizontal ? 1 : dimension
-        let op = reversed ? -rhs : rhs
-        var arr = [startIndex]
-        while arr.last! != endIindex {
-            arr.append(arr.last! + op)
-        }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutGrid()
+        reloadValues()
+    }
+    
+    func layoutGrid() {
+        arrangedSubviews.forEach { $0.value.removeFromSuperview() }
+        arrangedSubviews = [:]
+        rows = dataSource?.gameView?(numberOfRowsIn: self) ?? 3
+        columns = dataSource?.gameView?(numberOfSectionsIn: self) ?? 3
         
-        return arr
+        for c in 0..<columns {
+            for r in 0..<rows {
+                let i = IndexPath(row: r, section: c)
+                let view = GameSquare(spacing: spacing)
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.backgroundColor = UIColor(named: "tint")
+                
+                addSubview(view)
+                arrangedSubviews[i] = view
+                
+                let l = arrangedSubviews[i--1]?.trailingAnchor ?? leadingAnchor
+                view.leadingAnchor.constraint(equalTo: l, constant: spacing).isActive = true
+                
+                let t = arrangedSubviews[i-|1]?.bottomAnchor ?? topAnchor
+                view.topAnchor.constraint(equalTo: t, constant: spacing).isActive = true
+                
+                if c == columns-1 { view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing).isActive = true }
+                if r == rows-1 { view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -spacing).isActive = true }
+                arrangedSubviews[i--1]?.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+                arrangedSubviews[i-|1]?.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+                
+            }
+        }
+    }
+    
+    func reloadValues() {
+        for c in 0..<columns {
+            for r in 0..<rows {
+                let i = IndexPath(row: r, section: c)
+                arrangedSubviews[i]?.text = dataSource?.gameView?(self, valueFor: i)
+                arrangedSubviews[i]?.backgroundColor = arrangedSubviews[i]?.backgroundColor?.withAlphaComponent(selectedIndexPaths.contains(i) ? 0.8 : 1)
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
-        startPosition = loc
-        endPosition = loc
-        didHighlightPositions?(selectedPositions)
+        addPositionIfNeeded(loc)
+        reloadValues()
     }
-    
+   
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
+        super.touchesBegan(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
-        endPosition = loc
-        didHighlightPositions?(selectedPositions)
+        addPositionIfNeeded(loc)
+        reloadValues()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
-        endPosition = loc
-        didSelectPositions?(selectedPositions)
-        startPosition = nil
-        didHighlightPositions?(selectedPositions)
+        addPositionIfNeeded(loc)
+        delegate?.gameView?(self, didComit: selectedIndexPaths)
+        selectedIndexPaths = []
+        reloadValues()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
-        startPosition = nil
-        didHighlightPositions?(selectedPositions)
+        selectedIndexPaths = []
+        reloadValues()
     }
     
     
-    private func position(of location: CGPoint) -> Int {
-        let r = Int(location.x / (bounds.width / CGFloat(dimension)))
-        let x = min(max(r, 0), dimension-1)
-        let c = Int(location.y / (bounds.height / CGFloat(dimension)))
-        let y = min(max(c, 0), dimension-1)
-        return x + y * dimension
+    private func addPositionIfNeeded(_ location: CGPoint) {
+        let indexPath = position(of: location)
+        if selectedIndexPaths[safe: selectedIndexPaths.count-2] == indexPath { selectedIndexPaths.removeLast(1); return }
+        if selectedIndexPaths.contains(indexPath) { return }
+        guard delegate?.gameView?(self, shouldCombine: indexPath, with: selectedIndexPaths) ?? true else { return }
+        selectedIndexPaths.append(indexPath)
     }
     
     
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func position(of location: CGPoint) -> IndexPath {
+        let r = Int(location.y / (bounds.height / CGFloat(rows)))
+        let y = min(max(r, 0), rows-1)
+        let c = Int(location.x / (bounds.width / CGFloat(columns)))
+        let x = min(max(c, 0), columns-1)
+        return IndexPath(row: y, section: x)
     }
-    
     
 }

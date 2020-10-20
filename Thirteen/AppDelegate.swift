@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,16 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
         
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            Defaults.appVersion.set("\(version)")
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            UserDefaults.standard.set("\(version) (\(build))", forKey: "appVersion")
         }
 
         window = UIWindow()
-        window?.rootViewController = ViewController()
+        window?.rootViewController = GameController()
         window?.makeKeyAndVisible()
         
-        GameCenter.authenticateLocalPlayer()
+        GameCenterService.authenticateLocalPlayer()
         
         return true
     }
