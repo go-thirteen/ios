@@ -82,7 +82,28 @@ class GameView: UIView {
             for r in 0..<rows {
                 let i = IndexPath(row: r, section: c)
                 arrangedSubviews[i]?.text = dataSource?.gameView?(self, valueFor: i)
+               
+            }
+        }
+    }
+    
+    func updateHighlight() {
+        for c in 0..<columns {
+            for r in 0..<rows {
+                let i = IndexPath(row: r, section: c)
                 arrangedSubviews[i]?.backgroundColor = arrangedSubviews[i]?.backgroundColor?.withAlphaComponent(selectedIndexPaths.contains(i) ? 0.8 : 1)
+            }
+        }
+    }
+    
+    func pop(_ indexPath: IndexPath) {
+        guard let view = arrangedSubviews[indexPath] else { return }
+        guard let newValue = dataSource?.gameView?(self, valueFor: indexPath) else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            UIView.transition(with: view, duration: 0.5, options: [.curveEaseInOut, .transitionFlipFromLeft]) {
+                view.text = newValue
+            } completion: { _ in
+                
             }
         }
     }
@@ -91,14 +112,14 @@ class GameView: UIView {
         super.touchesBegan(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
         addPositionIfNeeded(loc)
-        reloadValues()
+        updateHighlight()
     }
    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
         addPositionIfNeeded(loc)
-        reloadValues()
+        updateHighlight()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -107,13 +128,13 @@ class GameView: UIView {
         addPositionIfNeeded(loc)
         delegate?.gameView?(self, didComit: selectedIndexPaths)
         selectedIndexPaths = []
-        reloadValues()
+        updateHighlight()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
         selectedIndexPaths = []
-        reloadValues()
+        updateHighlight()
     }
     
     

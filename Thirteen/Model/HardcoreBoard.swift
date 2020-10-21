@@ -8,11 +8,11 @@
 
 import Foundation
 
+fileprivate let options: [(Float, Int)] = [(0.05, 1), (0.05, 2), (0.05, 3), (0.1, 4), (0.1, 5), (0.2, 6), (0.05, 7), (0.05, 8), (0.2, 9), (0.1, 10), (0.05, 11)]
+
 class HardcoreBoard: ClassicBoard {
 
     override func newValue() -> Int {
-        let random = Float.random(in: 0..<1)
-        let value = round(pow(8, random)) + 3
-        return Int(value)
+        return Choice.choose(from: options) ?? 0
     }
 }

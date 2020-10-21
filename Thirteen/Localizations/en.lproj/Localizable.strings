@@ -15,3 +15,13 @@
 "hardcoreGameType" = "Hard";
 "bigGameType" = "Big";
 
+"aboutTitle" = "About";
+
+"introductionBody" = "Go Thirteen is a puzzle combination game where you have to add orthogonally adjecents squares that add up to thirteen. Challenge your friends to beat your high score and become the Go Thirteen champion!";
+"controlsTitle" = "Controls";
+"controlsBody" = "You play Go Thirteen by dragging across the screen to create groups. Once you've connected a group the numbers of those squares are added to form a new square. All squares that reach the number thirteen dissapear to make room for a new (lower) square. It is not possible to combine squares that would result in a new square that has a number high than 13.";
+"goalTitle" = "Goal";
+"goalBody" = "The objective of Go Thirteen is to get as high a score as possible. The game is over when there are no more possible moves (because every move would result in a square with a number higher than 13). High numbers are harder to get rid of than lower numbers so make sure that you get rid of them first!";
+"legalBody" = "You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to Wilhelm Thieme. By using Go Thirteen you agree to the collection of annonymous usage data. If you have any questions or suggestions please do not hesitate to contact me.";
+"contactMe" = "Contact me";
+

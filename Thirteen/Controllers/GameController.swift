@@ -46,10 +46,13 @@ class GameController: UIViewController {
     
     @IBAction private func openModeSelector(sender: UIButton) {
         let alert = AlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        GameType.allCases.forEach { t in alert.addAction(UIAlertAction(title: t.localizedTitle, style: .default, handler: { _ in
+        GameType.allCases.forEach { t in
+            alert.addAction(UIAlertAction(title: t.localizedTitle, style: .default, handler: { _ in
+            if GameType.current == t { return }
             GameType.current = t
             self.restart()
-        }))}
+            }))
+        }
         alert.addAction(UIAlertAction(title: localizedString("cancel"), style: .cancel, handler: nil))
         alert.popoverPresentationController?.sourceView = sender
         present(alert, animated: true, completion: nil)
@@ -59,8 +62,9 @@ class GameController: UIViewController {
         GameCenterService.openGameCenterController(on: self, id: GameType.current.rawValue)
     }
     
-    @IBAction private func openAbout() {
-        //TODO:
+    @IBAction private func openAbout(sender: UIButton) {
+        let controller = AboutController()
+        present(controller, animated: true, completion: nil)
     }
     
     private func gameover() {
@@ -97,11 +101,21 @@ extension GameController: GameViewDelegate, GameViewDataSource {
     
     func gameView(_ gameView: GameView, didComit selection: [IndexPath]) {
         board.sumPositions(selection)
-        if board.isGameOver { gameover() }
+
         updateScoreLabels()
+        gameView.reloadValues()
+        
+        if let last = selection.last, board[last]?.value == 13 {
+            board.popIndexPath(last)
+            gameView.pop(last)
+        }
+        
+        if board.isGameOver { gameover() }
     }
     
     func gameView(_ gameView: GameView, valueFor indexPath: IndexPath) -> String {
-        return "\(board[indexPath]?.value ?? 0)"
+        guard let value = board[indexPath]?.value else { return "" }
+        if value == 13 { return "13!" }
+        return "\(value)"
     }
 }

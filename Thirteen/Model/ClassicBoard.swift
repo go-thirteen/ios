@@ -8,6 +8,8 @@
 
 import Foundation
 
+fileprivate let options: [(Float, Int)] = [(0.1, 1), (0.1, 2), (0.2, 3), (0.2, 4), (0.1, 5), (0.1, 6), (0.1, 7), (0.05, 8), (0.02, 9), (0.02, 10), (0.01, 11)]
+
 class ClassicBoard: Board {
     override class var rows: Int { return 3 }
     override class var columns: Int { return 3 }
@@ -17,9 +19,7 @@ class ClassicBoard: Board {
     }
 
     override func newValue() -> Int {
-        let random = Float.random(in: 0..<1)
-        let value = round(pow(7, random)) + 2
-        return Int(value)
+        return Choice.choose(from: options) ?? 0
     }
     
     override func score(for value: Int) -> Int {
@@ -37,6 +37,5 @@ class ClassicBoard: Board {
     override func canAdd(indexPath: IndexPath, to selection: [IndexPath]) -> Bool {
         return selection.isLastPosition([.orthogonal], to: indexPath) && reduce(selection + [indexPath]) <= 13
     }
-    
-    
+
 }

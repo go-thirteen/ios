@@ -20,6 +20,11 @@ class AlertController: UIAlertController {
                 }
             }
         }
+        if let popover = popoverPresentationController, let root = UIApplication.shared.delegate?.window??.rootViewController {
+            popover.sourceView = root.view
+            popover.sourceRect = CGRect(x: root.view.bounds.midX, y: root.view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
+        }
     }
     
     //FIXME: Fixes a bug that tint is not set correctly

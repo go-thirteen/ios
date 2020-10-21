@@ -23,6 +23,8 @@
 		ED19B1EC253F418000A60465 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B1EB253F418000A60465 /* GameType.swift */; };
 		ED19B1EF253F41BE00A60465 /* BigBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B1EE253F41BE00A60465 /* BigBoard.swift */; };
 		ED19B1F3253F43B900A60465 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B1F2253F43B900A60465 /* AlertController.swift */; };
+		ED19B30D253F8D1200A60465 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED19B30C253F8D1200A60465 /* AboutView.xib */; };
+		ED19B310253F8D2000A60465 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B30F253F8D2000A60465 /* AboutController.swift */; };
 		ED5DFAF0202CAD9C001D3972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFADD202CAD9C001D3972 /* Assets.xcassets */; };
 		ED5DFAF1202CAD9C001D3972 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFADE202CAD9C001D3972 /* AppDelegate.swift */; };
 		EDA9C7262424C16D0088121C /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C7252424C16D0088121C /* GameController.swift */; };
@@ -56,6 +58,8 @@
 		ED19B1EB253F418000A60465 /* GameType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
 		ED19B1EE253F41BE00A60465 /* BigBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigBoard.swift; sourceTree = "<group>"; };
 		ED19B1F2253F43B900A60465 /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		ED19B30C253F8D1200A60465 /* AboutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		ED19B30F253F8D2000A60465 /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		ED5DFAB4202CAD57001D3972 /* Thirteen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thirteen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5DFACF202CAD9C001D3972 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED5DFADD202CAD9C001D3972 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				ED19B175253E383400A60465 /* GameView.xib */,
+				ED19B30C253F8D1200A60465 /* AboutView.xib */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 			children = (
 				ED19B1F2253F43B900A60465 /* AlertController.swift */,
 				EDA9C7252424C16D0088121C /* GameController.swift */,
+				ED19B30F253F8D2000A60465 /* AboutController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -299,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDA9C7602424C8730088121C /* Settings.bundle in Resources */,
+				ED19B30D253F8D1200A60465 /* AboutView.xib in Resources */,
 				ED5DFAF0202CAD9C001D3972 /* Assets.xcassets in Resources */,
 				ED19B170253E373A00A60465 /* GoogleService-Info.plist in Resources */,
 				ED19B1D0253F25C100A60465 /* LaunchScreen.xib in Resources */,
@@ -378,6 +385,7 @@
 				ED19B1B3253F1FE400A60465 /* Button.swift in Sources */,
 				EDA9C77F242A5D290088121C /* GameCenterService.swift in Sources */,
 				ED19B1EC253F418000A60465 /* GameType.swift in Sources */,
+				ED19B310253F8D2000A60465 /* AboutController.swift in Sources */,
 				ED19B186253EC87700A60465 /* IndexPath.swift in Sources */,
 				ED19B1EF253F41BE00A60465 /* BigBoard.swift in Sources */,
 				EDA9C77D242A59490088121C /* Square.swift in Sources */,
@@ -539,12 +547,13 @@
 				DEVELOPMENT_TEAM = 9ELM74XG98;
 				INFOPLIST_FILE = Thirteen/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wjthieme.Thirteen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -564,12 +573,13 @@
 				DEVELOPMENT_TEAM = 9ELM74XG98;
 				INFOPLIST_FILE = Thirteen/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wjthieme.Thirteen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
