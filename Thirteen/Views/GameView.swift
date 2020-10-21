@@ -26,6 +26,7 @@ class GameView: UIView {
     private var selectedIndexPaths: [IndexPath] = []
     private var rows: Int = 3
     private var columns: Int = 3
+    private var gameover = false
     
     var spacing: CGFloat = 8
     @IBOutlet weak var dataSource: GameViewDataSource?
@@ -96,6 +97,31 @@ class GameView: UIView {
         }
     }
     
+    func showGameover() {
+        if gameover { return }
+        gameover = true
+        UIView.animate(withDuration: 0.5) {
+            for c in 0..<self.columns {
+                for r in 0..<self.rows {
+                    let i = IndexPath(row: r, section: c)
+                    self.arrangedSubviews[i]?.backgroundColor = UIColor(named: "gameover")
+                }
+            }
+        }
+    }
+    
+    func hideGameover() {
+        if !gameover { return }
+        gameover = false
+        for c in 0..<self.columns {
+            for r in 0..<self.rows {
+                let i = IndexPath(row: r, section: c)
+                self.arrangedSubviews[i]?.backgroundColor = UIColor(named: "tint")
+            }
+        }
+        //hide label
+    }
+    
     func pop(_ indexPath: IndexPath) {
         guard let view = arrangedSubviews[indexPath] else { return }
         guard let newValue = dataSource?.gameView?(self, valueFor: indexPath) else { return }
@@ -109,6 +135,7 @@ class GameView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameover { return }
         super.touchesBegan(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
         addPositionIfNeeded(loc)
@@ -116,6 +143,7 @@ class GameView: UIView {
     }
    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameover { return }
         super.touchesBegan(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
         addPositionIfNeeded(loc)
@@ -123,6 +151,7 @@ class GameView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameover { return }
         super.touchesEnded(touches, with: event)
         guard let loc = touches.first?.location(in: self) else { return }
         addPositionIfNeeded(loc)
@@ -132,6 +161,7 @@ class GameView: UIView {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameover { return }
         super.touchesCancelled(touches, with: event)
         selectedIndexPaths = []
         updateHighlight()

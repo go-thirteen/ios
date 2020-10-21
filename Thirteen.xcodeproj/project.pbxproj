@@ -25,6 +25,7 @@
 		ED19B1F3253F43B900A60465 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B1F2253F43B900A60465 /* AlertController.swift */; };
 		ED19B30D253F8D1200A60465 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED19B30C253F8D1200A60465 /* AboutView.xib */; };
 		ED19B310253F8D2000A60465 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B30F253F8D2000A60465 /* AboutController.swift */; };
+		ED19B398254086CC00A60465 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED19B397254086CC00A60465 /* Colors.xcassets */; };
 		ED5DFAF0202CAD9C001D3972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED5DFADD202CAD9C001D3972 /* Assets.xcassets */; };
 		ED5DFAF1202CAD9C001D3972 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DFADE202CAD9C001D3972 /* AppDelegate.swift */; };
 		EDA9C7262424C16D0088121C /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA9C7252424C16D0088121C /* GameController.swift */; };
@@ -60,6 +61,7 @@
 		ED19B1F2253F43B900A60465 /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		ED19B30C253F8D1200A60465 /* AboutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		ED19B30F253F8D2000A60465 /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
+		ED19B397254086CC00A60465 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		ED5DFAB4202CAD57001D3972 /* Thirteen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thirteen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5DFACF202CAD9C001D3972 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED5DFADD202CAD9C001D3972 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			children = (
 				ED19B1CF253F25C100A60465 /* LaunchScreen.xib */,
 				ED5DFADD202CAD9C001D3972 /* Assets.xcassets */,
+				ED19B397254086CC00A60465 /* Colors.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				ED5DFAF0202CAD9C001D3972 /* Assets.xcassets in Resources */,
 				ED19B170253E373A00A60465 /* GoogleService-Info.plist in Resources */,
 				ED19B1D0253F25C100A60465 /* LaunchScreen.xib in Resources */,
+				ED19B398254086CC00A60465 /* Colors.xcassets in Resources */,
 				ED19B176253E383400A60465 /* GameView.xib in Resources */,
 				EDA9C7652424C89E0088121C /* Localizable.strings in Resources */,
 			);

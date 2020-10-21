@@ -39,6 +39,7 @@ class GameController: UIViewController {
         GameCenterService.addScoreToGameCenter(board.score, id: GameType.current.rawValue)
         modeButton.setTitle(GameType.current.localizedTitle, for: .normal)
         board = GameType.current.boardType.init(fresh: true)
+        gameView.hideGameover()
         gameView.layoutGrid()
         gameView.reloadValues()
         updateScoreLabels()
@@ -69,8 +70,7 @@ class GameController: UIViewController {
     
     private func gameover() {
         GameCenterService.addScoreToGameCenter(board.score, id: GameType.current.rawValue)
-        
-        //TODO: SHow gameover
+        gameView.showGameover()
     }
     
     private func updateScoreLabels() {
