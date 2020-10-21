@@ -10,13 +10,13 @@
 "newButton" = "New";
 "scoreTitle" = "Score";
 "highscoreTitle" = "Best";
+"gameover" = "Game Over";
 
 "classicGameType" = "Classic";
 "hardcoreGameType" = "Hard";
 "bigGameType" = "Big";
 
 "aboutTitle" = "About";
-
 "introductionBody" = "Go Thirteen is a puzzle combination game where you have to add orthogonally adjecents squares that add up to thirteen. Challenge your friends to beat your high score and become the Go Thirteen champion!";
 "controlsTitle" = "Controls";
 "controlsBody" = "You play Go Thirteen by dragging across the screen to create groups. Once you've connected a group the numbers of those squares are added to form a new square. All squares that reach the number thirteen dissapear to make room for a new (lower) square. It is not possible to combine squares that would result in a new square that has a number high than 13.";

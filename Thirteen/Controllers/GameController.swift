@@ -16,6 +16,8 @@ class GameController: UIViewController {
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var highscoreLabel: UILabel!
     @IBOutlet private weak var modeButton: UIButton!
+    @IBOutlet private weak var gameoverView: UIView!
+    
     
     private var board: Board = GameType.current.boardType.init()
     
@@ -33,13 +35,18 @@ class GameController: UIViewController {
         
         modeButton.setTitle(GameType.current.localizedTitle, for: .normal)
         updateScoreLabels()
+        
+        if board.isGameOver {
+            gameoverView.isHidden = false
+            gameoverView.alpha = 1
+        }
     }
     
     @IBAction private func restart() {
         GameCenterService.addScoreToGameCenter(board.score, id: GameType.current.rawValue)
         modeButton.setTitle(GameType.current.localizedTitle, for: .normal)
         board = GameType.current.boardType.init(fresh: true)
-        gameView.hideGameover()
+        hideGameoverView()
         gameView.layoutGrid()
         gameView.reloadValues()
         updateScoreLabels()
@@ -48,10 +55,10 @@ class GameController: UIViewController {
     @IBAction private func openModeSelector(sender: UIButton) {
         let alert = AlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         GameType.allCases.forEach { t in
-            alert.addAction(UIAlertAction(title: t.localizedTitle, style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: t.localizedTitle, style: .default, handler: { [self] _ in
             if GameType.current == t { return }
             GameType.current = t
-            self.restart()
+            restart()
             }))
         }
         alert.addAction(UIAlertAction(title: localizedString("cancel"), style: .cancel, handler: nil))
@@ -70,7 +77,7 @@ class GameController: UIViewController {
     
     private func gameover() {
         GameCenterService.addScoreToGameCenter(board.score, id: GameType.current.rawValue)
-        gameView.showGameover()
+        showGameoverView()
     }
     
     private func updateScoreLabels() {
@@ -81,6 +88,22 @@ class GameController: UIViewController {
         }
     }
     
+    
+    private func showGameoverView() {
+        gameoverView.isHidden = false
+        UIView.animate(withDuration: 0.5) { [self] in
+            gameoverView.alpha = 1
+        }
+    }
+    
+    private func hideGameoverView() {
+        UIView.animate(withDuration: 0.5) { [self] in
+            gameoverView.alpha = 0
+        } completion: { [self] _ in
+            gameoverView.isHidden = true
+        }
+
+    }
     
 
 }

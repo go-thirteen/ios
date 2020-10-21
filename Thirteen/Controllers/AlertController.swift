@@ -13,7 +13,7 @@ class AlertController: UIAlertController {
     //FIXME: Fixes a constraint conflict bug
     override func viewDidLoad() {
         super.viewDidLoad()
-        for subview in self.view.subviews {
+        for subview in view.subviews {
             for constraint in subview.constraints {
                 if constraint.firstAttribute == .width && constraint.constant == -16 {
                     constraint.priority = .defaultHigh
@@ -30,7 +30,7 @@ class AlertController: UIAlertController {
     //FIXME: Fixes a bug that tint is not set correctly
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        self.view.tintColor = view.tintColor
+        view.tintColor = view.tintColor
     }
     
 }
