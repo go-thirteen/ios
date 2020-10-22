@@ -18,9 +18,7 @@ class GameController: UIViewController {
     @IBOutlet private weak var modeButton: UIButton!
     @IBOutlet private weak var gameoverView: UIView!
     
-    
-    private var board: Board = GameType.current.boardType.init()
-    
+    private var board: Board = GameType.current.boardType.load()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: "GameView", bundle: nil)
@@ -43,9 +41,9 @@ class GameController: UIViewController {
     }
     
     @IBAction private func restart() {
-        GameCenterService.addScoreToGameCenter(board.score, id: GameType.current.rawValue)
+        GameCenterService.addScoreToGameCenter(board.score, type: GameType.current)
         modeButton.setTitle(GameType.current.localizedTitle, for: .normal)
-        board = GameType.current.boardType.init(fresh: true)
+        board = GameType.current.boardType.load(fresh: true)
         hideGameoverView()
         gameView.layoutGrid()
         gameView.reloadValues()
@@ -67,7 +65,7 @@ class GameController: UIViewController {
     }
     
     @IBAction private func openGameCenter() {
-        GameCenterService.openGameCenterController(on: self, id: GameType.current.rawValue)
+        GameCenterService.openGameCenterController(on: self, type: GameType.current)
     }
     
     @IBAction private func openAbout(sender: UIButton) {
@@ -76,7 +74,7 @@ class GameController: UIViewController {
     }
     
     private func gameover() {
-        GameCenterService.addScoreToGameCenter(board.score, id: GameType.current.rawValue)
+        GameCenterService.addScoreToGameCenter(board.score, type: GameType.current)
         showGameoverView()
     }
     

@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             UserDefaults.standard.set("\(version) (\(build))", forKey: "appVersion")
         }
-
+        
         window = UIWindow()
         window?.rootViewController = GameController()
         window?.makeKeyAndVisible()

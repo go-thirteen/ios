@@ -13,7 +13,6 @@
 		ED19B17E253EC32900A60465 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B17D253EC32900A60465 /* Array.swift */; };
 		ED19B183253EC71200A60465 /* ClassicBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B182253EC71200A60465 /* ClassicBoard.swift */; };
 		ED19B186253EC87700A60465 /* IndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B185253EC87700A60465 /* IndexPath.swift */; };
-		ED19B18E253ED09200A60465 /* FromSelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B18D253ED09200A60465 /* FromSelf.swift */; };
 		ED19B1A6253F07E800A60465 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B1A5253F07E800A60465 /* AnalyticsService.swift */; };
 		ED19B1AD253F0C2A00A60465 /* HardcoreBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B1AC253F0C2A00A60465 /* HardcoreBoard.swift */; };
 		ED19B1B3253F1FE400A60465 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED19B1B0253F1FE300A60465 /* Button.swift */; };
@@ -47,7 +46,6 @@
 		ED19B17D253EC32900A60465 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		ED19B182253EC71200A60465 /* ClassicBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicBoard.swift; sourceTree = "<group>"; };
 		ED19B185253EC87700A60465 /* IndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPath.swift; sourceTree = "<group>"; };
-		ED19B18D253ED09200A60465 /* FromSelf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromSelf.swift; sourceTree = "<group>"; };
 		ED19B1A5253F07E800A60465 /* AnalyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		ED19B1AC253F0C2A00A60465 /* HardcoreBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardcoreBoard.swift; sourceTree = "<group>"; };
 		ED19B1B0253F1FE300A60465 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 		EDA9C75D2424C85A0088121C /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		EDA9C75F2424C8730088121C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		EDA9C7662424C89E0088121C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		EDA9C7682424C8A30088121C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EDA9C76C242505D30088121C /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		EDA9C772242542AE0088121C /* GameSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSquare.swift; sourceTree = "<group>"; };
 		EDA9C77424254CF90088121C /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
@@ -186,7 +183,6 @@
 			children = (
 				EDA9C75D2424C85A0088121C /* LocalizedString.swift */,
 				ED19B17D253EC32900A60465 /* Array.swift */,
-				ED19B18D253ED09200A60465 /* FromSelf.swift */,
 				ED19B185253EC87700A60465 /* IndexPath.swift */,
 			);
 			path = Utilities;
@@ -287,7 +283,6 @@
 			knownRegions = (
 				en,
 				Base,
-				nl,
 			);
 			mainGroup = ED5DFAAB202CAD57001D3972;
 			productRefGroup = ED5DFAB5202CAD57001D3972 /* Products */;
@@ -357,7 +352,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols\n";
+			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp \"${PROJECT_DIR}/Thirteen/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
 		};
 		ED5DFAF8202CAE21001D3972 /* [Script] Auto-Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -395,7 +390,6 @@
 				ED19B17E253EC32900A60465 /* Array.swift in Sources */,
 				EDA9C773242542AE0088121C /* GameSquare.swift in Sources */,
 				ED19B1AD253F0C2A00A60465 /* HardcoreBoard.swift in Sources */,
-				ED19B18E253ED09200A60465 /* FromSelf.swift in Sources */,
 				ED19B1B5253F1FE400A60465 /* View.swift in Sources */,
 				ED19B1F3253F43B900A60465 /* AlertController.swift in Sources */,
 				ED19B1B4253F1FE400A60465 /* Label.swift in Sources */,
@@ -411,7 +405,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				EDA9C7662424C89E0088121C /* en */,
-				EDA9C7682424C8A30088121C /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

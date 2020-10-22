@@ -34,4 +34,12 @@ enum GameType: String, CaseIterable {
         set { UserDefaults.standard.set(newValue.rawValue, forKey: "currentGametype") }
     }
     
+    var scoreboardId: String {
+        switch self {
+        case .classic: return "com.wjthieme.Thirteen"
+        case .hardcore: return "com.wjthieme.Thirteen.Hardcore"
+        case .big: return "com.wjthieme.Thirteen.Big"
+        }
+    }
+    
 }

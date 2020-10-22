@@ -14,11 +14,10 @@ class GameCenterService: NSObject, GKGameCenterControllerDelegate {
     private static let delegate = GameCenterService()
     
     private static var gameCenterEnabled = false
-    private static var gameCenterLeaderboardID: String?
     
-    static func addScoreToGameCenter(_ score: Int, id: String) {
+    static func addScoreToGameCenter(_ score: Int, type: GameType) {
         guard gameCenterEnabled else { return }
-        let scoreObj = GKScore(leaderboardIdentifier: id)
+        let scoreObj = GKScore(leaderboardIdentifier: type.scoreboardId)
         scoreObj.value = Int64(score)
         GKScore.report([scoreObj]) { (error) in
             if let error = error { AnalyticsService.log(error) }
@@ -30,22 +29,14 @@ class GameCenterService: NSObject, GKGameCenterControllerDelegate {
             if let error = error { AnalyticsService.log(error); return }
             guard GKLocalPlayer.local.isAuthenticated else { return }
             gameCenterEnabled = true
-            loadDefaultLeaderboard()
         }
     }
     
-    private static func loadDefaultLeaderboard() {
-        GKLocalPlayer.local.loadDefaultLeaderboardIdentifier { id, error in
-            if let error = error { AnalyticsService.log(error); return }
-            gameCenterLeaderboardID = id
-        }
-    }
-    
-    static func openGameCenterController(on viewController: UIViewController, id: String) {
+    static func openGameCenterController(on viewController: UIViewController, type: GameType) {
         let controller = GKGameCenterViewController()
         controller.gameCenterDelegate = delegate
         controller.viewState = .leaderboards
-        controller.leaderboardIdentifier = id
+        controller.leaderboardIdentifier = type.scoreboardId
         viewController.present(controller, animated: true, completion: nil)
     }
 

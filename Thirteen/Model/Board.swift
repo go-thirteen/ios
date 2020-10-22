@@ -10,7 +10,7 @@ import Foundation
 
 fileprivate let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("currentBoard.json")
 
-class Board: Codable, FromSelf {
+class Board: Codable {
     private final var squares: [IndexPath: Square]
     class var rows: Int { fatalError() }
     class var columns: Int { fatalError() }
@@ -24,19 +24,19 @@ class Board: Codable, FromSelf {
         set { squares[i] = newValue }
     }
     
-    required convenience init(fresh: Bool = false) {
+    static func load(fresh: Bool = false) -> Board {
         do {
             if fresh { throw NSError() }
             let data = try Data(contentsOf: url, options: .mappedIfSafe)
             let obj = try JSONDecoder().decode(Self.self, from: data)
             try Self.indexes.forEach { if !obj.contains($0) { throw NSError() } }
-            self.init(from: obj)
+            return obj
         } catch {
-            self.init()
+            return Self.init()
         }
     }
     
-    private init() {
+    required internal init() {
         squares = Dictionary(uniqueKeysWithValues: Self.indexes.map { ($0, Square()) })
         squares.forEach { $0.value.value = newValueAndAddScore() }
         save()
