@@ -23,6 +23,7 @@ class GameSquare: UIView {
         label.textAlignment = .center
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize * 2)
         addSubview(label)
         label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: spacing).isActive = true
         label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing).isActive = true
